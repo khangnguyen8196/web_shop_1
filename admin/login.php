@@ -1,5 +1,5 @@
 <?php 
-	include ("../classes/adminLogin.php");
+	include_once ("../classes/adminLogin.php");
 ?>
 
 <?php

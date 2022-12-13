@@ -4,7 +4,7 @@
 ?>
 
 <?php 
-    class category {
+    class brand {
 
         private $db;
         private $fm;
@@ -14,15 +14,15 @@
             $this->fm = new Format();
         }
 
-        public function insert_category($name){
+        public function insert_brand($name){
             $name=$this->fm->validation($name);
             $name= mysqli_real_escape_string($this->db->link,$name);
         
             if(empty($name)){
-                $alert ="<span class='error'>Category must be not empty</span>";
+                $alert ="<span class='error'>brand must be not empty</span>";
                 return $alert;
             }else {
-                $query="INSERT INTO category (catname) VALUES ('$name')";
+                $query="INSERT INTO brand (brandname) VALUES ('$name')";
                 $result=$this->db->insert($query);
                 if($result){
                     $alert="<span class='success'>Insert Success!</span> ";
@@ -35,28 +35,28 @@
             }
         }
 
-        public function show_category(){
-            $query="SELECT * FROM category order by id DESC ";
+        public function show_brand(){
+            $query="SELECT * FROM brand order by id DESC ";
             $result=$this->db->select($query);
             return $result;
         }
 
-        public function getcatbyId($id){
-            $query="SELECT * FROM category WHERE id = $id ";
+        public function getbrandbyId($id){
+            $query="SELECT * FROM brand WHERE id = $id ";
             $result=$this->db->select($query);
             return $result;
         }
 
-        public function update_category($id,$name){
+        public function update_brand($id,$name){
             $name=$this->fm->validation($name);
             $name= mysqli_real_escape_string($this->db->link,$name);
             $id= mysqli_real_escape_string($this->db->link,$id);
         
             if(empty($name)){
-                $alert ="<span class='success'>Category must be not empty</span>";
+                $alert ="<span class='success'>brand must be not empty</span>";
                 return $alert;
             }else {
-                $query="UPDATE category SET catname ='$name' WHERE id='$id'";
+                $query="UPDATE brand SET brandname ='$name' WHERE id='$id'";
                 $result=$this->db->update($query);
                 if($result){
                     $alert="<span class='success'>Update Success!</span> ";
@@ -69,8 +69,8 @@
             }
         }
 
-        public function delete_category($id){
-            $query="DELETE FROM category WHERE id = $id ";
+        public function delete_brand($id){
+            $query="DELETE FROM brand WHERE id = $id ";
             $result=$this->db->delete($query);
             if($result){
                 $alert="<span class='success'>Delete Success!</span> ";
