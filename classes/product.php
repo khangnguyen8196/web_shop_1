@@ -16,7 +16,7 @@
         }
 
         public function insert_product($data, $files){
-            
+
             $name= mysqli_real_escape_string($this->db->link,$data['productname']);
             $brandId= mysqli_real_escape_string($this->db->link,$data['brandId']);
             $categoryId= mysqli_real_escape_string($this->db->link,$data['categoryId']);
@@ -160,11 +160,39 @@
             $result=$this->db->select($query);
             return $result;
         }
+
         public function getDetail ($id){
             $query="SELECT product.*, category.catname, brand.brandname 
             FROM product INNER JOIN category  ON product.categoryId = category.categoryId
             INNER JOIN brand  ON product.brandId = brand.brandId
             WHERE product.productId = '$id' LIMIT 1" ;
+            $result=$this->db->select($query);
+            return $result;
+        }
+
+        public function getLastestAsus(){
+            $query="SELECT * FROM product WHERE brandId = '6' order by productId DESC LIMIT 1";
+            $result=$this->db->select($query);
+            return $result;
+        }
+
+        
+        public function getLastestSamsung(){
+            $query="SELECT * FROM product WHERE brandId = '1' order by productId DESC LIMIT 1";
+            $result=$this->db->select($query);
+            return $result;
+        }
+
+        
+        public function getLastestIphone(){
+            $query="SELECT * FROM product WHERE brandId = '2' order by productId DESC LIMIT 1";
+            $result=$this->db->select($query);
+            return $result;
+        }
+
+        
+        public function getLastestHp(){
+            $query="SELECT * FROM product WHERE brandId = '5' order by productId DESC LIMIT 1";
             $result=$this->db->select($query);
             return $result;
         }

@@ -1,6 +1,5 @@
 
 <?php include("include/header.php");?>
-<?php include("include/slider.php");?>
 
 <?php 
 	 if(!isset($_GET['proid']) || $_GET['proid']==NULL){
@@ -8,6 +7,12 @@
 	 }else {
 		 $id=$_GET['proid'];
 	 }
+?>
+<?php
+	if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])){
+       $quantity=$_POST['quantity'];
+		$addCart=$cart->add_to_cart($quantity,$id);
+    }
 ?>
 <div class="main">
     <div class="content">
@@ -31,10 +36,15 @@
 								<p>Brand:<span><?php echo $result['brandname'];?></span></p>
 							</div>
 							<div class="add-cart">
-								<form action="cart.php" method="post">
-									<input type="number" class="buyfield" name="" value="1"/>
-									<input type="submit" class="buysubmit" name="submit" value="Buy Now"/>
-								</form>				
+								<form action="" method="post">
+									<input type="number" class="buyfield" name="quantity" value="1" min="1"/>
+									<input type="submit" class="buysubmit" name="submit" value="Buy Now"/>	
+								</form>
+								<?php
+										if(isset($addCart)){
+											echo '<span class="error">Product already added</span>';
+										}
+								?>				
 							</div>
 						</div>
 						<div class="product-desc">

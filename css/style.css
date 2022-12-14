@@ -129,6 +129,18 @@ body{
 	font-weight:bold;
 	color: #4F4F4F;
 }
+.shopping_cart span.cart_notice{
+	position: absolute;
+    padding: 2px 5px;
+    top: -20px;
+    right: 150px;
+    font-size: 1.2rem;
+    line-height: 1.2rem;
+    color: red;
+    background-color: #fff;
+    border-radius: 10px;
+    border: 2px solid #ea2c098f;
+}
 .shopping_cart span.no_product{
 	font-size:13px;
 	font-weight:bold;
@@ -2474,4 +2486,14 @@ p.terms {
 		width:92%;
 		padding:4%;
 	}
+}
+
+.success{
+	color:green;
+	font-size: 20px;
+}
+
+.error{
+	color:red;
+	font-size: 20px;
 }
