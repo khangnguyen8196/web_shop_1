@@ -1,6 +1,7 @@
 <?php
-    include_once("../lib/database.php");
-    include_once("../helpers/format.php");
+    $filepath= realpath(dirname(__FILE__));
+    include_once($filepath."/../lib/database.php");
+    include_once($filepath."/../helpers/format.php");
 ?>
 
 <?php 
@@ -36,13 +37,13 @@
         }
 
         public function show_category(){
-            $query="SELECT * FROM category order by id DESC ";
+            $query="SELECT * FROM category order by categoryId DESC ";
             $result=$this->db->select($query);
             return $result;
         }
 
         public function getcatbyId($id){
-            $query="SELECT * FROM category WHERE id = $id ";
+            $query="SELECT * FROM category WHERE categoryId = $id ";
             $result=$this->db->select($query);
             return $result;
         }
@@ -56,7 +57,7 @@
                 $alert ="<span class='success'>Category must be not empty</span>";
                 return $alert;
             }else {
-                $query="UPDATE category SET catname ='$name' WHERE id='$id'";
+                $query="UPDATE category SET catname ='$name' WHERE categoryId='$id'";
                 $result=$this->db->update($query);
                 if($result){
                     $alert="<span class='success'>Update Success!</span> ";
@@ -70,7 +71,7 @@
         }
 
         public function delete_category($id){
-            $query="DELETE FROM category WHERE id = $id ";
+            $query="DELETE FROM category WHERE categoryId = $id ";
             $result=$this->db->delete($query);
             if($result){
                 $alert="<span class='success'>Delete Success!</span> ";

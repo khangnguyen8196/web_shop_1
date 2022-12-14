@@ -61,8 +61,8 @@
 						echo 'Featured';
 					}
 					 ?></td>
-					<td><a href="productedit.php?productid=<?php echo $result['id'] ?>">Edit</a> || 
-					<a onclick="return confirm('Are you want to delete?')" href="?delid=<?php echo $result['id']?>">Delete</a></td>
+					<td><a href="productedit.php?productid=<?php echo $result['productId'] ?>">Edit</a> || 
+					<a onclick="return confirm('Are you want to delete?')" href="?delid=<?php echo $result['productId']?>">Delete</a></td>
 				</tr>
 
 				<?php }

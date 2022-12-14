@@ -35,7 +35,7 @@
                         <label>Category</label>
                     </td>
                     <td>
-                        <select id="select" name="category_id">
+                        <select id="select" name="categoryId">
                             <option>Select Category</option>
                             <?php 
                                 $cat = new category;
@@ -43,7 +43,7 @@
                                 if($catlist){
                                     while($result= $catlist->fetch_assoc()){
                                   ?>     
-                                    <option value="<?php echo $result['id'] ?>"><?php echo $result['catname'] ?></option>
+                                    <option value="<?php echo $result['categoryId'] ?>"><?php echo $result['catname'] ?></option>
                                <?php    }
 
                                 }
@@ -57,7 +57,7 @@
                         <label>Brand</label>
                     </td>
                     <td>
-                        <select id="select" name="brand_id">
+                        <select id="select" name="brandId">
                             <option>Select Brand</option>
                             <?php 
                                 $brand = new brand;
@@ -65,7 +65,7 @@
                                 if($brandlist){
                                     while($result= $brandlist->fetch_assoc()){
                                   ?>     
-                                    <option value="<?php echo $result['id'] ?>"><?php echo $result['brandname'] ?></option>
+                                    <option value="<?php echo $result['brandId'] ?>"><?php echo $result['brandname'] ?></option>
                                <?php    }
 
                                 }

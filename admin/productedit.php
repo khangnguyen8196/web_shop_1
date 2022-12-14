@@ -45,7 +45,7 @@
                         <label>Category</label>
                     </td>
                     <td>
-                        <select id="select" name="category_id" >
+                        <select id="select" name="categoryId" >
                             <option>Select Category</option>
                             <?php 
                                 $cat = new category;
@@ -55,9 +55,9 @@
                                   ?>     
                                     <option
                                     <?php
-                                        if($result['id']==$result_row['category_id']){ echo 'selected';}
+                                        if($result['categoryId']==$result_row['categoryId']){ echo 'selected';}
                                      ?>  
-                                    value="<?php echo $result['id'] ?>"><?php echo $result['catname'] ?></option>
+                                    value="<?php echo $result['categoryId'] ?>"><?php echo $result['catname'] ?></option>
                                <?php   }
 
                                 }
@@ -71,7 +71,7 @@
                         <label>Brand</label>
                     </td>
                     <td>
-                        <select id="select" name="brand_id">
+                        <select id="select" name="brandId">
                             <option>Select Brand</option>
                             <?php 
                                 $brand = new brand;
@@ -81,9 +81,9 @@
                                   ?>     
                                     <option 
                                     <?php
-                                        if($result['id']==$result_row['brand_id']){ echo 'selected';}
+                                        if($result['brandId']==$result_row['brandId']){ echo 'selected';}
                                      ?>  
-                                    value="<?php echo $result['id'] ?>"><?php echo $result['brandname'] ?></option>
+                                    value="<?php echo $result['brandId'] ?>"><?php echo $result['brandname'] ?></option>
                                <?php    }
 
                                 }

@@ -36,9 +36,9 @@
 									<tr class="odd gradeX">
 										<td><?php echo $i ?></td>
 										<td><?php echo $result['brandname']?></td>
-										<td><a href="brandedit.php?brandid=<?php echo $result['id']?>">Edit</a> || 
+										<td><a href="brandedit.php?brandid=<?php echo $result['brandId']?>">Edit</a> || 
 										
-										<a onclick="return confirm('Are you want to delete?')" href="?delid=<?php echo $result['id']?>">Delete</a></td>
+										<a onclick="return confirm('Are you want to delete?')" href="?delid=<?php echo $result['brandId']?>">Delete</a></td>
 									</tr>
 									<?php }
 							}

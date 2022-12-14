@@ -1,6 +1,7 @@
 <?php
-    include_once("../lib/database.php");
-    include_once("../helpers/format.php");
+    $filepath= realpath(dirname(__FILE__));
+    include_once($filepath."/../lib/database.php");
+    include_once($filepath."/../helpers/format.php");
 ?>
 
 <?php 
@@ -17,8 +18,8 @@
         public function insert_product($data, $files){
             
             $name= mysqli_real_escape_string($this->db->link,$data['productname']);
-            $brand_id= mysqli_real_escape_string($this->db->link,$data['brand_id']);
-            $category_id= mysqli_real_escape_string($this->db->link,$data['category_id']);
+            $brandId= mysqli_real_escape_string($this->db->link,$data['brandId']);
+            $categoryId= mysqli_real_escape_string($this->db->link,$data['categoryId']);
             $description= mysqli_real_escape_string($this->db->link,$data['description']);
             $price= mysqli_real_escape_string($this->db->link,$data['price']);
             $type= mysqli_real_escape_string($this->db->link,$data['type']);
@@ -33,13 +34,13 @@
             $unique_image = substr(md5(time()),0, 10). '.' .$file_ext;
             $uploaded_image= "../admin/uploads/".$unique_image;
         
-            if($name =="" || $brand_id =="" || $category_id =="" || $description =="" || $price =="" || $type =="" || $file_name ==""){
+            if($name =="" || $brandId =="" || $categoryId =="" || $description =="" || $price =="" || $type =="" || $file_name ==""){
                 $alert ="<span class='error'>Fields must be not empty</span>";
                 return $alert;
             }else {
                 move_uploaded_file($file_temp, $uploaded_image);
-                $query="INSERT INTO product (productname,brand_id,category_id,description,price,type,image) 
-                VALUES ('$name','$brand_id','$category_id','$description','$price','$type','$unique_image')";
+                $query="INSERT INTO product (productname,brandId,categoryId,description,price,type,image) 
+                VALUES ('$name','$brandId','$categoryId','$description','$price','$type','$unique_image')";
                 $result=$this->db->insert($query);
                 if($result){
                     $alert="<span class='success'>Insert Success!</span> ";
@@ -54,24 +55,18 @@
 
         public function show_product(){
             $query="SELECT product.*, category.catname, brand.brandname 
-            FROM product INNER JOIN category  ON product.category_id = category.id
-            INNER JOIN brand  ON product.brand_id = brand.id
-            order by product.id DESC ";
+            FROM product INNER JOIN category  ON product.categoryId = category.categoryId
+            INNER JOIN brand  ON product.brandId = brand.brandId
+            order by product.productId DESC ";
             // $query="SELECT * FROM product order by id DESC ";
-            $result=$this->db->select($query);
-            return $result;
-        }
-
-        public function getproductbyId($id){
-            $query="SELECT * FROM product WHERE id = $id ";
             $result=$this->db->select($query);
             return $result;
         }
 
         public function update_product($data,$files,$id){
             $name= mysqli_real_escape_string($this->db->link,$data['productname']);
-            $brand_id= mysqli_real_escape_string($this->db->link,$data['brand_id']);
-            $category_id= mysqli_real_escape_string($this->db->link,$data['category_id']);
+            $brandId= mysqli_real_escape_string($this->db->link,$data['brandId']);
+            $categoryId= mysqli_real_escape_string($this->db->link,$data['categoryId']);
             $description= mysqli_real_escape_string($this->db->link,$data['description']);
             $price= mysqli_real_escape_string($this->db->link,$data['price']);
             $type= mysqli_real_escape_string($this->db->link,$data['type']);
@@ -86,7 +81,7 @@
             $unique_image = substr(md5(time()),0, 10). '.' .$file_ext;
             $uploaded_image= "../admin/uploads/".$unique_image;
         
-            if($name =="" || $brand_id =="" || $category_id =="" || $description =="" || $price =="" || $type ==""){
+            if($name =="" || $brandId =="" || $categoryId =="" || $description =="" || $price =="" || $type ==""){
                 $alert ="<span class='success'>product must be not empty</span>";
                 return $alert;
             }else {
@@ -104,23 +99,23 @@
                     unlink($unique_image); 
                     $query="UPDATE product SET 
                     productname ='$name',
-                    brand_id ='$brand_id',
-                    category_id ='$category_id',
+                    brandId ='$brandId',
+                    categoryId ='$categoryId',
                     description ='$description',
                     price ='$price',
                     type ='$type',
                     image ='$unique_image'
-                    WHERE id='$id'";
+                    WHERE productId='$id'";
                 }else {
                     // người dùng không chọn hình ảnh
                     $query="UPDATE product SET 
                     productname ='$name',
-                    brand_id ='$brand_id',
-                    category_id ='$category_id',
+                    brandId ='$brandId',
+                    categoryId ='$categoryId',
                     description ='$description',
                     price ='$price',
                     type ='$type'
-                    WHERE id='$id'";
+                    WHERE productId='$id'";
                 }
                 $result=$this->db->update($query);
                 if($result){
@@ -135,7 +130,7 @@
         }
 
         public function delete_product($id){
-            $query="DELETE FROM product WHERE id = $id";
+            $query="DELETE FROM product WHERE productId = $id";
             $result=$this->db->delete($query);
             if($result){
                 $alert="<span class='success'>Delete Success!</span> ";
@@ -145,5 +140,34 @@
                 return $alert;
             }
         }
-    }
+
+        public function getproductbyId($id){
+            $query="SELECT * FROM product WHERE productId = $id ";
+            $result=$this->db->select($query);
+            return $result;
+        }
+
+        // End backend
+
+        public function getproduct_feathered(){
+            $query="SELECT * FROM product WHERE type = 1 ";
+            $result=$this->db->select($query);
+            return $result;
+        }
+
+        public function getproduct_new(){
+            $query="SELECT * FROM product order by productId DESC LIMIT 4";
+            $result=$this->db->select($query);
+            return $result;
+        }
+        public function getDetail ($id){
+            $query="SELECT product.*, category.catname, brand.brandname 
+            FROM product INNER JOIN category  ON product.categoryId = category.categoryId
+            INNER JOIN brand  ON product.brandId = brand.brandId
+            WHERE product.productId = '$id' LIMIT 1" ;
+            $result=$this->db->select($query);
+            return $result;
+        }
+        
+    }   
 ?>
