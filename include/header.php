@@ -50,7 +50,7 @@
   <div class="wrap">
 		<div class="header_top">
 			<div class="logo">
-				<a href="index.php"><img src="images/logo.png" alt="" /></a>
+				<a href="index.php"><img width="230px" height="100px" src="images/logoshop.png" alt="" /></a>
 			</div>
 			  <div class="header_top_right">
 			    <div class="search_box">
@@ -60,9 +60,9 @@
 			    </div>
 			    <div class="shopping_cart">
 					<div class="cart">
-						<a href="#" title="View my shopping cart" rel="nofollow">
+						<a href="cart.php" title="View my shopping cart" rel="nofollow">
 								<span class="cart_title">Cart:</span>
-								<span class="cart-notice">
+								<span class="cart_notice">
 									<?php
 										$check_cart=$cart->check_cart();
 										if($check_cart){

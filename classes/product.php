@@ -150,13 +150,13 @@
         // End backend
 
         public function getproduct_feathered(){
-            $query="SELECT * FROM product WHERE type = 1 ";
+            $query="SELECT * FROM product WHERE type = 1 order by productId DESC LIMIT 5 ";
             $result=$this->db->select($query);
             return $result;
         }
 
         public function getproduct_new(){
-            $query="SELECT * FROM product order by productId DESC LIMIT 4";
+            $query="SELECT * FROM product order by productId DESC LIMIT 5";
             $result=$this->db->select($query);
             return $result;
         }

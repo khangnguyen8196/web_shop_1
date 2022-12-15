@@ -81,5 +81,29 @@
                 return $alert;
             }
         }
+
+
+        public function show_category_frontend(){
+            $query="SELECT * FROM category order by categoryId DESC ";
+            $result=$this->db->select($query);
+            return $result;
+        }
+
+        public function get_product_by_cat($id){
+            $query="SELECT * FROM product WHERE categoryId='$id' 
+            order by categoryId DESC LIMIT 5 ";
+            $result=$this->db->select($query);
+            return $result;
+        }
+
+        public function get_name_by_cat($id){
+            $query="SELECT product.*, category.catname, category.categoryId 
+            FROM product, category WHERE product.categoryId=category.categoryId 
+            AND product.categoryId='$id' LIMIT 1";
+            $result=$this->db->select($query);
+            return $result;
+        }
+
+        
     }
 ?>
