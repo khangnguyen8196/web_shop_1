@@ -88,6 +88,16 @@
             $result=$this->db->select($query);
             return $result;
         }
+        //logout
+        public function del_all_cart(){
+            $sessionId=session_id();
+            $query="DELETE FROM cart WHERE sessionId='$sessionId'";
+            $result=$this->db->select($query);
+            return $result;
+        }
+
+
+        
 
        
     }

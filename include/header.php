@@ -12,7 +12,7 @@
 	$db = new Database();
 	$fm = new Format();
 	$cart= new cart();
-	$user= new user();
+	$cus= new customer();
 	$cat = new category();
 	$product= new product();
 ?>
@@ -88,7 +88,22 @@
 							</a>
 						</div>
 			      </div>
-		   <div class="login"><a href="login.php">Login</a></div>
+				  <?php
+				 	if(isset($_GET['customer_id'])){
+						$delCart =$cart->del_all_cart();
+						Session::destroy();
+					} 
+				  ?>
+		   	<div class="login">
+				<?php
+				$login_check = Session::get('customer_login');
+				if($login_check==false){
+					echo '<a href="login.php">Login</a>';
+				}else {
+					echo '<a href="?customer_id='.Session::get('customer_id').'">Logout</a>';
+				}
+				?>
+			</div>
 		 <div class="clear"></div>
 	 </div>
 	 <div class="clear"></div>
@@ -100,6 +115,7 @@
 	  <li><a href="topbrands.php">Top Brands</a></li>
 	  <li><a href="cart.php">Cart</a></li>
 	  <li><a href="contact.php">Contact</a> </li>
+	  <li><a href="register.php">REGISTER</a> </li>
 	  <div class="clear"></div>
 	</ul>
 </div>

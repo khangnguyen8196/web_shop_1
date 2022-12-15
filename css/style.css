@@ -175,9 +175,10 @@ input[type="number"] {
   border: 1px solid #cecece;
   box-sizing: border-box;
   color: #444;
-  display: block;
+  display: flex;
   float: left;
-  font-size: 27px;
+  align-items: center;
+  font-size: 20px;
   height: 38px;
   margin-left: 10px;
   text-align: center;
@@ -185,6 +186,7 @@ input[type="number"] {
 }
 .login a {
 	color:#333;
+	margin: 0 auto;
 }
 /*** Login ***/
 .register_account h3,.login_panel h3{
@@ -197,12 +199,16 @@ input[type="number"] {
   background: #fff none repeat scroll 0 0;
   border: 1px solid #c0bebe;
   border-radius: 3px;
-  float: left;
+  margin: 0 auto;
+  text-align: center;
   height: 284px;
   padding: 20px;
   width: 712px;
 }
-.register_account form input[type="text"],.register_account form select{
+.register_account form input[type="text"],
+.register_account form select,
+.register_account form input[type="email"],
+.register_account form input[type="password"] {
 	font-size:12px;
 	color:#B3B1B1;
 	padding:8px;
@@ -211,7 +217,7 @@ input[type="number"] {
 	width:340px;
 }
 .register_account form select{
-	width:360px;
+	width:340px;
 	color:#666;
 }
 .register_account form input[type="text"].code{
@@ -233,9 +239,8 @@ input[type="number"] {
 }
 
 .login_panel{
-	float:left;
+	margin:0 auto;
 	width: 245px;
-	margin-right: 10px;
 	padding:20px;
 	background:#FFF;
 	border:1px solid #C0BEBE;

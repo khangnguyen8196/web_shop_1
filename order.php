@@ -1,7 +1,14 @@
 <?php include("include/header.php");?>
 
+<?php
+				$login_check = Session::get('customer_login');
+					if($login_check==false){
+						header('Location:login.php');
+					}
+?>
+
 <style>
-   .not_found {
+   .order_page {
       font-size: 30px;
       font-weight: 500;
       color: red;
@@ -11,8 +18,8 @@
     <div class="content">
     	<div class="cartoption">		
 			<div class="cartpage">
-                <div class="not_found">
-                        <h3>Page doesn't found!</h3>
+                <div class="order_page">
+                        <h3>Order page</h3>
                 </div>
 			</div>
     	</div>  	
