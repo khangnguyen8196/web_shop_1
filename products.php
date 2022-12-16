@@ -11,7 +11,7 @@
     	</div>
 	      <div class="section group">
 				<div class="grid_1_of_4 images_1_of_4">
-					 <a href="detail-3.php"><img src="images/feature-pic1.png" alt="" /></a>
+					 <a href="detail-3.php"><img src="images/feature-pic1.png" alt="image"/></a>
 					 <h2>Lorem Ipsum is simply </h2>
 					 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
 					 <p><span class="price">$505.22</span></p>

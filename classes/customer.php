@@ -72,7 +72,7 @@
                     Session::set('customer_login',true);
                     Session::set('customer_id', $value['id']);
                     Session::set('customer_username', $value['username']);
-                    header("Location:order.php");
+                    header("Location:index.php");
                 }else {
                     $alert= "<span class='error'> Username or Password doesn't match !</span>";
                     return $alert;
@@ -81,6 +81,38 @@
             }  
         }
 
+        public function show_customer($id){
+            $query="SELECT * FROM users WHERE id = $id LIMIT 1";
+            $result=$this->db->select($query);
+            return $result;
+        }
+
+        public function update_profile($data,$id){
+            $username= mysqli_real_escape_string($this->db->link,$data['username']); 
+            $email= mysqli_real_escape_string($this->db->link,$data['email']); 
+            $city= mysqli_real_escape_string($this->db->link,$data['city']); 
+            $address= mysqli_real_escape_string($this->db->link,$data['address']); 
+            $phone= mysqli_real_escape_string($this->db->link,$data['phone']); 
+            $country= mysqli_real_escape_string($this->db->link,$data['country']); 
+            $zipcode= mysqli_real_escape_string($this->db->link,$data['zipcode']);
+            if($username =="" || $email ==""  || $city =="" 
+            || $address =="" || $phone =="" || $country =="" || $zipcode ==""){
+                $alert ="<span class='error'> Fields must be not empty</span>";
+                    return $alert;
+            }else{  
+            $query=" UPDATE users SET username='$username',email='$email',city='$city',
+            address= '$address',phone='$phone',country='$country',zipcode='$zipcode' WHERE id='$id'";
+            $result=$this->db->update($query);
+                if ($result){
+                        $alert= "<span class='success'> Update profile successfully!</span>";
+                        return $alert;
+                    }else {
+                        $alert= "<span class='error'> Update profile not successfully!</span>";
+                        return $alert;
+                    }
+            }
+        } 
+        
        
     }
 ?>
