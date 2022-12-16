@@ -14,7 +14,7 @@
 						</div>
 						<div class="text list_2_of_1">
 							<h2>HP</h2>
-							<p><?php echo $result['description'] ?></p>
+							<p><?php echo $fm->textShorten($result['description'],40)?></p>
 							<div class="button"><span><a href="detail.php?proid=<?php echo $result['productId']; ?>">Add to cart</a></span></div>
 					</div>
 				</div>
@@ -35,7 +35,7 @@
 					</div>
 					<div class="text list_2_of_1">
 						  <h2>Asus</h2>
-						  <p><?php echo $result['description'] ?></p>
+						  <p><?php echo $fm->textShorten($result['description'],40)?></p>
 						  <div class="button"><span><a href="detail.php?proid=<?php echo $result['productId']; ?>">Add to cart</a></span></div>
 					</div>
 				</div>
@@ -59,7 +59,7 @@
 					</div>
 				    <div class="text list_2_of_1">
 						<h2>Iphone</h2>
-						<p><?php echo $result['description'] ?></p>
+						<p><?php echo $fm->textShorten($result['description'],40)?></p>
 						<div class="button"><span><a href="detail.php?proid=<?php echo $result['productId']; ?>">Add to cart</a></span></div>
 				   </div>
 			   </div>
@@ -81,7 +81,7 @@
 					</div>
 					<div class="text list_2_of_1">
 						  <h2>Samsung</h2>
-						  <p><?php echo $result['description'] ?></p>
+						  <p><?php echo $fm->textShorten($result['description'],40)?></p>
 						  <div class="button"><span><a href="detail.php?proid=<?php echo $result['productId']; ?>">Add to cart</a></span></div>
 					</div>
 				</div>
@@ -107,5 +107,5 @@
 	      </section>
 <!-- FlexSlider -->
 	    </div>
-	  <div class="clear"></div>
-  </div>
+	  	<div class="clear"></div>
+</div>

@@ -114,13 +114,20 @@
 								echo 'Your Cart is empty ! You can shopping now';
 							}
 						?>
-					</div>
+			</div>
 					<div class="shopping">
 						<div class="shopleft">
 							<a href="index.php"> <img src="images/shop.png" alt="" /></a>
 						</div>
 						<div class="shopright">
-							<a href="login.php"> <img src="images/check.png" alt="" /></a>
+							<?php 
+								$login_check = Session::get('customer_login');
+								if($login_check==false){
+									echo '<a href="login.php"><img src="images/check.png" alt="" /></a>';
+								}else {
+									echo '<a href="payment.php"> <img src="images/check.png" alt="" /></a>';
+								}
+							?>
 						</div>
 					</div>
     	</div>  	

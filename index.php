@@ -17,7 +17,7 @@
 				if($product_feathered){
 					while($result=$product_feathered->fetch_assoc()){ ?>
 						<div class="grid_1_of_4 images_1_of_4">
-							<a href="detail.php?proid=<?php echo $result['productId']; ?>"><img with="207px" height="207px" src="admin/uploads/<?php echo $result['image']; ?>" alt="image" /></a>
+							<a href="detail.php?proid=<?php echo $result['productId']; ?>"><img with="140px" height="140px" src="admin/uploads/<?php echo $result['image']; ?>" alt="image" /></a>
 							<h2><?php echo $result['productname']; ?> </h2>
 							<p><?php echo $fm->textShorten($result['description'], 50);?></p>
 							<p><span class="price"><?php echo $result['price']." "."VNĐ" ?></span></p>
@@ -39,7 +39,7 @@
 					if($product_new){
 						while($result_new=$product_new->fetch_assoc()){ ?>
 							<div class="grid_1_of_4 images_1_of_4">
-								<a href="detail.php"><img src="admin/uploads/<?php echo $result_new['image']; ?>" alt="image" /></a>
+								<a href="detail.php?proid=<?php echo $result_new['productId']; ?>"><img with="140px" height="140px" src="admin/uploads/<?php echo $result_new['image']; ?>" alt="image" /></a>
 								<h2><?php echo $result_new['productname']; ?> </h2>
 								<p><?php echo $fm->textShorten($result_new['description'], 50);?></p>
 								<p><span class="price"><?php echo $result_new['price']." "."VNĐ" ?></span></p>

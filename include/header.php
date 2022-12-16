@@ -47,17 +47,17 @@
 </script>
 </head>
 <body>
-  <div class="wrap">
-		<div class="header_top">
+<div class="wrap">
+	<div class="header_top">
 			<div class="logo">
 				<a href="index.php"><img width="230px" height="100px" src="images/logoshop.png" alt="" /></a>
 			</div>
-			  <div class="header_top_right">
-			    <div class="search_box">
-				    <form>
-				    	<input type="text" value="Search for Products" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search for Products';}"><input type="submit" value="SEARCH">
-				    </form>
-			    </div>
+			  	<div class="header_top_right">
+					<div class="search_box">
+						<form>
+							<input type="text" value="Search for Products" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search for Products';}"><input type="submit" value="SEARCH">
+						</form>
+					</div>
 			    <div class="shopping_cart">
 					<div class="cart">
 						<a href="cart.php" title="View my shopping cart" rel="nofollow">
@@ -85,9 +85,9 @@
 										
 									?>
 								</span>
-							</a>
-						</div>
-			      </div>
+						</a>
+					</div>
+			    </div>
 				  <?php
 				 	if(isset($_GET['customer_id'])){
 						$delCart =$cart->del_all_cart();
@@ -105,9 +105,9 @@
 				?>
 			</div>
 		 <div class="clear"></div>
-	 </div>
-	 <div class="clear"></div>
- </div>
+	</div>
+	<div class="clear"></div>
+</div>
 <div class="menu">
 	<ul id="dc_mega-menu-orange" class="dc_mm-orange">
 	  <li><a href="index.php">Home</a></li>
@@ -120,6 +120,15 @@
 		 }else {
 			echo '<li><a href="cart.php">Cart</a></li>';
 		 }
+	  ?>
+	  <?php 
+	  	$userId=Session::get('customer_id');
+	 	$check_order = $cart->check_order($userId);
+		if($check_order==false){
+			echo '';
+		}else {
+			echo '<li><a href="orderdetail.php">Ordered</a></li>';
+		}
 	  ?>
 	  <li><a href="contact.php">Contact</a> </li>
 	  <?php 
