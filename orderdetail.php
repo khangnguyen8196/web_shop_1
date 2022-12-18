@@ -66,8 +66,8 @@
 								<th width="10%">Action</th>
 							</tr>
 							<?php 
-                     	$userId=Session::get('customer_id');
-								$get_cart_ordered=$cart->get_cart_ordered($userId);
+                     	$customerId=Session::get('customer_id');
+								$get_cart_ordered=$cart->get_cart_ordered($customerId);
 								if($get_cart_ordered){
                            $i=0;
 									while($result=$get_cart_ordered->fetch_assoc()){

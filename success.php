@@ -1,8 +1,8 @@
 <?php include("include/header.php");?>
 <?php 
 	 if(isset($_GET['orderId']) && $_GET['orderId']=='order'){
-		$userId=Session::get('customer_id');
-		// $insertOrder=$cart->insert_order($userId);
+		$customerId=Session::get('customer_id');
+		// $insertOrder=$cart->insert_order($customerId);
 		// $delCart =$cart->del_all_cart();
 		header('location:success.php');
 	 }
@@ -24,8 +24,8 @@
     	<div class="section group">		
             <h2 class="success_order"> Success Order !</h2>
             <?php 
-               $userId=Session::get('customer_id');
-               $get_amount=$cart->get_amount_price($userId);
+               $customerId=Session::get('customer_id');
+               $get_amount=$cart->get_amount_price($customerId);
                if($get_amount){
                   $amount=0;
                   while($result=$get_amount->fetch_assoc()){

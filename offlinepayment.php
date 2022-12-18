@@ -3,8 +3,8 @@
 
 <?php 
 	 if(isset($_GET['orderId']) && $_GET['orderId']=='order'){
-		$userId=Session::get('customer_id');
-		$insertOrder=$cart->insert_order($userId);
+		$customerId=Session::get('customer_id');
+		$insertOrder=$cart->insert_order($customerId);
 		$delCart =$cart->del_all_cart();
 		header('location:success.php');
 	 }

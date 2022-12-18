@@ -10,9 +10,14 @@
 ?>
 <?php
 	if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])){
-       $quantity=$_POST['quantity'];
+		$quantity=$_POST['quantity'];
 		$addCart=$cart->add_to_cart($quantity,$id);
     }
+	$customerId=Session::get('customer_id');
+	if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['wishlist'])){
+		$productid=$_POST['productid'];
+		 $insertWishlist=$product->insertWishlist($productid,$customerId);
+	 }
 ?>
 <div class="main">
     <div class="content">
@@ -45,6 +50,25 @@
 											echo '<span class="error">Product already added</span>';
 										}
 								?>				
+							</div>
+							<div class="add-cart">
+								<form action="" method="post">
+									<input type="hidden"  name="productid" value="<?php echo $result['productId'] ?>"/>	
+								
+								<?php
+									$login_check = Session::get('customer_login');
+										if($login_check){
+											echo '<input type="submit" class="buysubmit" name="wishlist" value="Save to Wishlist"/>	';
+										}else {
+											echo '';
+										}
+								?>
+								<?php 
+									if(isset($insertWishlist)){
+										echo $insertWishlist;
+									}
+								?>
+								</form>				
 							</div>
 						</div>
 						<div class="product-desc">

@@ -122,8 +122,8 @@
 		 }
 	  ?>
 	  <?php 
-	  	$userId=Session::get('customer_id');
-	 	$check_order = $cart->check_order($userId);
+	  	$customerId=Session::get('customer_id');
+	 	$check_order = $cart->check_order($customerId);
 		if($check_order==false){
 			echo '';
 		}else {
@@ -137,6 +137,14 @@
 			echo '<li><a href="register.php">Register</a> </li>';
 		 }else {
 			echo '<li><a href="profile.php">Profile</a> </li>';
+		 }
+	  ?>
+	  <?php 
+	 	 $login_check = Session::get('customer_login');
+		 if($login_check==false){
+			echo '';
+		 }else {
+			echo '<li><a href="wishlist.php">WishList</a> </li>';
 		 }
 	  ?>
 	  <div class="clear"></div>

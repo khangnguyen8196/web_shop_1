@@ -96,7 +96,7 @@
             return $result;
         }
         // order 
-        public function insert_order($userId){
+        public function insert_order($customerId){
             $sessionId=session_id();
             $query="SELECT * FROM cart WHERE sessionId='$sessionId'";
             $get_product=$this->db->select($query);
@@ -107,8 +107,8 @@
                     $quantity=$result['quantity'];
                     $price=$result['price'] * $quantity;
                     $image=$result['image'];
-                    $customer_id=$userId;
-                    $query_order="INSERT INTO orders (productId,quantity,productname,price,image,userId) 
+                    $customer_id=$customerId;
+                    $query_order="INSERT INTO orders (productId,quantity,productname,price,image,customerId) 
                     VALUES ('$productId','$quantity','$productname',' $price','$image','$customer_id')";
                     $insert_order=$this->db->insert($query_order);
                     // if($insert_order){
@@ -120,14 +120,14 @@
             }
         }
 
-        public function get_amount_price($userId){
-            $query="SELECT price FROM orders WHERE userId='$userId'";
+        public function get_amount_price($customerId){
+            $query="SELECT price FROM orders WHERE customerId='$customerId'";
             $get_price=$this->db->select($query);
             return $get_price;
         }
         //order detail
-        public function get_cart_ordered($userId){
-            $query="SELECT * FROM orders WHERE userId='$userId'";
+        public function get_cart_ordered($customerId){
+            $query="SELECT * FROM orders WHERE customerId='$customerId'";
             $get_cart=$this->db->select($query);
             return $get_cart;
         }
@@ -143,8 +143,8 @@
             }
         }
 
-        public function check_order($userId){
-            $query="SELECT * FROM orders WHERE userId='$userId'";
+        public function check_order($customerId){
+            $query="SELECT * FROM orders WHERE customerId='$customerId'";
             $result=$this->db->select($query);
             return $result;
         }

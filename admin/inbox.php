@@ -62,8 +62,8 @@
 							<td><?php echo $result['productname']?></td>
 							<td><?php echo $result['quantity']?></td>
 							<td><?php echo $result['price']." "."VNĐ"?></td>
-							<td><?php echo $result['userId']?></td>
-							<td><a href="customer.php?customerId=<?php echo $result['userId']?>">View Customer</a></td>
+							<td><?php echo $result['customerId']?></td>
+							<td><a href="customer.php?customerId=<?php echo $result['customerId']?>">View Customer</a></td>
 							<td><?php echo $fm->formatDate($result['date_order']) ?></td>
 							<td>
 								<?php

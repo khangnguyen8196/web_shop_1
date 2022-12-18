@@ -196,6 +196,49 @@
             $result=$this->db->select($query);
             return $result;
         }
+
+        // product wishlist
+        public function insertWishlist($productid, $customerId){
+            $productid= mysqli_real_escape_string($this->db->link, $productid);
+            $customerId= mysqli_real_escape_string($this->db->link, $customerId);
+
+            $check_wish ="SELECT * FROM wishlist WHERE productId ='$productid' AND customerId ='$customerId'";
+            $result_check_wish=$this->db->select($check_wish);
+
+            if($result_check_wish){
+                $message='<span class="success">Product Already Added to wishlist!</span>';
+                return $message;
+            }else {
+                $query="SELECT * FROM product WHERE productId = '$productid' ";
+                $result=$this->db->select($query)->fetch_assoc();
+
+                $productname=$result['productname'];
+                $price = $result['price'];
+                $image=$result['image'];
+
+                $query_insert="INSERT INTO wishlist (productId, price, image, customerId, productname) 
+                VALUES ('$productid','$price','$image','$customerId',' $productname')";
+                $insert_wish=$this->db->insert($query_insert);
+                if($insert_wish){
+                    $alert="<span class='success'>Added to Wishlist Success!</span> ";
+                    return $alert;
+                }else {
+                    $alert="<span class='error'>Added to Wishlist not Success!</span> ";
+                    return $alert;
+                }
+            }
+        }
+        public function get_wish_list($customerId){
+            $query="SELECT * FROM wishlist WHERE customerId = '$customerId' order by wishId DESC ";
+            $result=$this->db->select($query);
+            return $result;
+        }
+
+        public function del_wish($productId,$customerId){
+            $query="DELETE FROM wishlist WHERE productId = '$productId' AND customerId = '$customerId'";
+            $result=$this->db->delete($query);
+            return $result;
+        }
         
     }   
 ?>
