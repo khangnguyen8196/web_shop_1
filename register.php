@@ -35,13 +35,13 @@
 								<div>
 									<select id="country" name="country" onchange="change_country(this.value)" class="frm-field required">
 										<option value="null">--Select a Country--</option>         
-										<option value="AF">TP.Hồ Chí Minh</option>
-										<option value="AF">Bình Dương</option>
-										<option value="AF">Đồng Nai</option>
-										<option value="AF">Tiền Giang</option>
-										<option value="AF">Long An</option>
-										<option value="AF">Cần Thơ</option>
-										<option value="AF">Hà Nội</option>
+										<option value="TP.Hồ Chí Minh">TP.Hồ Chí Minh</option>
+										<option value="Bình Dương">Bình Dương</option>
+										<option value="Đồng Nai">Đồng Nai</option>
+										<option value="Tiền Giang">Tiền Giang</option>
+										<option value="Long An">Long An</option>
+										<option value="Cần Thơ">Cần Thơ</option>
+										<option value="Hà Nội">Hà Nội</option>
 									</select>
 								</div>		        
 			

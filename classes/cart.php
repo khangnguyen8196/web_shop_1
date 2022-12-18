@@ -125,7 +125,7 @@
             $get_price=$this->db->select($query);
             return $get_price;
         }
-
+        //order detail
         public function get_cart_ordered($userId){
             $query="SELECT * FROM orders WHERE userId='$userId'";
             $get_cart=$this->db->select($query);
@@ -148,8 +148,63 @@
             $result=$this->db->select($query);
             return $result;
         }
-        
 
-       
+        // inbox cart admin
+        public function get_inbox_cart(){
+            $query="SELECT * FROM orders  ORDER BY date_order";
+            $result=$this->db->select($query);
+            return $result;
+        }
+
+        public function shifted($id,$price,$time){
+            $id= mysqli_real_escape_string($this->db->link,$id);
+            $price= mysqli_real_escape_string($this->db->link,$price);
+           
+            $query="UPDATE orders SET 
+                    status ='1'
+                    WHERE orderId='$id' AND price='$price' AND date_order='$time'";
+            $result=$this->db->update($query);
+            if($result){
+                $message='<span class="success">Update order successfully!</span>';
+                return $message;
+            }else {
+                $message='<span class="error">Update order not successfully!</span>';
+                return $message;
+            }
+        }
+
+        public function del_shifted($id,$price,$time){
+            $id= mysqli_real_escape_string($this->db->link,$id);
+            $price= mysqli_real_escape_string($this->db->link,$price);
+           
+            $query="DELETE FROM orders
+                    WHERE orderId='$id' AND price='$price' AND date_order='$time'";
+            $result=$this->db->update($query);
+            if($result){
+                $message='<span class="success">Delete order successfully!</span>';
+                return $message;
+            }else {
+                $message='<span class="error">Delete order not successfully!</span>';
+                return $message;
+            }
+        }
+
+        public function shifted_confirm($id,$price,$time){
+            $id= mysqli_real_escape_string($this->db->link,$id);
+            $price= mysqli_real_escape_string($this->db->link,$price);
+           
+            $query="UPDATE orders SET 
+                    status ='2'
+                    WHERE orderId='$id' AND price='$price' AND date_order='$time'";
+            $result=$this->db->update($query);
+            if($result){
+                $message='<span class="success">Update order successfully!</span>';
+                return $message;
+            }else {
+                $message='<span class="error">Update order not successfully!</span>';
+                return $message;
+            }
+        }
+           
     }
 ?>

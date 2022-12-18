@@ -82,7 +82,7 @@
         }
 
         public function show_customer($id){
-            $query="SELECT * FROM users WHERE id = $id LIMIT 1";
+            $query="SELECT * FROM users WHERE id=$id AND level=1  LIMIT 1";
             $result=$this->db->select($query);
             return $result;
         }

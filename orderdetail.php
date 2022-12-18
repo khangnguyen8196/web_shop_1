@@ -6,6 +6,12 @@
    if($login_check==false){
       header("location:login.php");
    }
+   if(isset($_GET['confirmid'])){
+	$id=$_GET['confirmid'];
+	$price=$_GET['price'];
+	$time=$_GET['time'];
+	$shifted_confirm=$cart->shifted_confirm($id,$price,$time);
+	}
    if(isset($_GET['cartId'])){
       $id=$_GET['cartId'];
       $del_cart_order=$cart->del_cart_order($id);
@@ -80,19 +86,28 @@
                               <?php
                                  if($result['status']==0){
                                     echo 'Pending';
-                                 }else {
-                                    echo 'processed';
-                                 }
+                                 }elseif($result['status']==1) {?>
+                                    <span>Shifted</span>
+								<?php
+								}elseif($result['status']==2){
+									echo 'Received';
+								}
                               ?>
                            </td>
                            <?php
                               if($result['status']==0){
                            ?>
                               <td><?php echo 'N/A'; ?></td> 
+							  <?php 
+							}elseif($result['status']==1) {?>
+								<td>
+								<a href="?confirmid=<?php echo $result['orderId']?>&price=<?php echo $result['price']?>&time=<?php echo $result['date_order']?> 
+									">Confirm</a>
+								</td>
                             <?php  
-                            }else {
+                            }elseif($result['status']==2){
                            ?>
-									<td><a onclick="return confirm('Are you want to delete?')" href="?cartId=<?php echo $result['orderId']?>">Xoá</a></td>
+								<td><?php echo 'Received'?></td>
                            <?php
                               }
                             ?>
