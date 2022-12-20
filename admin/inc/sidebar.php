@@ -20,6 +20,12 @@
                         <li><a href="productlist.php">Danh sách sản phẩm</a> </li>
                     </ul>
                 </li>
+                <li><a class="menuitem">Slide</a>
+                    <ul class="submenu">
+                        <li><a href="slideradd.php">Thêm slide</a> </li>
+                        <li><a href="sliderlist.php">Danh sách slide</a> </li>
+                    </ul>
+                </li>
                <li><a class="menuitem">Site Option</a>
                     <ul class="submenu">
                         <li><a href="titleslogan.php">Title & Slogan</a></li>

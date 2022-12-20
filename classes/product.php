@@ -53,15 +53,60 @@
             }
         }
 
-        public function show_product(){
+        // public function show_product(){
+        //     $item_page=10;
+        //     if(!isset($_GET['page']) ){
+        //         $current_page=1;
+        //     }elseif($_GET['page']==0){
+        //         $current_page=1;
+        //     }else{
+        //         $current_page=$_GET['page'];
+        //     }
+        //     $start = ($current_page - 1)*$item_page;
+        //     $query="SELECT product.*, category.catname, brand.brandname 
+        //     FROM product INNER JOIN category  ON product.categoryId = category.categoryId
+        //     INNER JOIN brand  ON product.brandId = brand.brandId
+        //     order by product.productId DESC LIMIT $start,$item_page";
+        //     // $query="SELECT * FROM product order by id DESC ";
+        //     $result=$this->db->select($query);
+        //     return $result;
+        // }
+
+        public function search_product(){
+           
+            $keyword= isset($_GET['keyword']) ? $_GET['keyword'] : '';
+            $item_page=10;
+            if(!isset($_GET['page']) ){
+                $current_page=1;
+            }elseif($_GET['page']==0){
+                $current_page=1;
+            }else{
+                $current_page=$_GET['page'];
+            }
+            $start = ($current_page - 1)*$item_page;
             $query="SELECT product.*, category.catname, brand.brandname 
             FROM product INNER JOIN category  ON product.categoryId = category.categoryId
-            INNER JOIN brand  ON product.brandId = brand.brandId
-            order by product.productId DESC ";
+            INNER JOIN brand  ON product.brandId = brand.brandId 
+            WHERE product.productname LIKE '%".$keyword."%' OR category.catname LIKE '%".$keyword."%'
+            OR brand.brandname LIKE '%".$keyword."%' 
+            order by product.productId DESC LIMIT $start,$item_page";
             // $query="SELECT * FROM product order by id DESC ";
             $result=$this->db->select($query);
             return $result;
         }
+
+        public function show_product_all(){
+            $keyword= isset($_GET['keyword']) ? $_GET['keyword'] : '';
+            $query="SELECT product.*, category.catname, brand.brandname 
+            FROM product INNER JOIN category  ON product.categoryId = category.categoryId
+            INNER JOIN brand  ON product.brandId = brand.brandId 
+            order by product.productId DESC";
+            // $query="SELECT * FROM product order by productId DESC ";
+            $result=$this->db->select($query);
+            return $result;
+        }
+
+        
 
         public function update_product($data,$files,$id){
             $name= mysqli_real_escape_string($this->db->link,$data['productname']);
@@ -156,7 +201,19 @@
         }
 
         public function getproduct_new(){
-            $query="SELECT * FROM product order by productId DESC LIMIT 5";
+            $item_page=5;
+            if(!isset($_GET['page'])){
+                $current_page=1;
+            }else{
+                $current_page=$_GET['page'];
+            }
+            $start = ($current_page - 1)*$item_page;
+            $query="SELECT * FROM product order by productId DESC LIMIT $start, $item_page";
+            $result=$this->db->select($query);
+            return $result;
+        }
+        public function getproduct_all(){
+            $query="SELECT * FROM product order by productId DESC ";
             $result=$this->db->select($query);
             return $result;
         }
@@ -237,6 +294,51 @@
         public function del_wish($productId,$customerId){
             $query="DELETE FROM wishlist WHERE productId = '$productId' AND customerId = '$customerId'";
             $result=$this->db->delete($query);
+            return $result;
+        }
+
+
+        // slider
+        public function insert_slider($data, $files){
+            $slidername= mysqli_real_escape_string($this->db->link,$data['slidername']);
+            $type= mysqli_real_escape_string($this->db->link,$data['type']);
+            // kiểm tra và lấy hình ảnh vào uploads
+            $permited =array('jpg','jpeg','png','gif');
+            $file_name=$_FILES['image']['name'];
+            $file_size=$_FILES['image']['size'];
+            $file_temp=$_FILES['image']['tmp_name'];
+
+            $div=explode('.', $file_name);
+            $file_ext = strtolower(end($div));
+            $unique_image = substr(md5(time()),0, 10). '.' .$file_ext;
+            $uploaded_image= "../admin/uploads/".$unique_image;
+        
+            if($slidername =="" || $type ==""){
+                $alert ="<span class='error'>Fields must be not empty</span>";
+                return $alert;
+            }else {
+                move_uploaded_file($file_temp, $uploaded_image);
+                $query="INSERT INTO slider (slidername,type,sliderimage) 
+                VALUES ('$slidername','$type','$unique_image')";
+                $result=$this->db->insert($query);
+                if($result){
+                    $alert="<span class='success'>Insert Success!</span> ";
+                    return $alert;
+                }else {
+                    $alert="<span class='error'>Insert not Success!</span> ";
+                    return $alert;
+                }
+
+            }
+        }
+
+        public function show_slider(){
+            // $query="SELECT product.*, category.catname, brand.brandname 
+            // FROM product INNER JOIN category  ON product.categoryId = category.categoryId
+            // INNER JOIN brand  ON product.brandId = brand.brandId
+            // order by product.productId DESC ";
+            $query="SELECT * FROM slider WHERE type ='1' order by sliderId DESC ";
+            $result=$this->db->select($query);
             return $result;
         }
         
