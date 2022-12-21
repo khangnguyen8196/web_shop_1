@@ -41,6 +41,17 @@
             $result=$this->db->select($query);
             return $result;
         }
+        public function get_list_category(){
+            $query="SELECT * FROM category order by categoryId DESC ";
+            $result=$this->db->select($query);
+            $array=[];
+            if($result){
+                while($row=mysqli_fetch_array($result)){
+                    $array[] = ['id' => $row['categoryId'], 'name' => $row['catname']];
+                }
+            }
+            return $array;
+        }
 
         public function getcatbyId($id){
             $query="SELECT * FROM category WHERE categoryId = $id ";

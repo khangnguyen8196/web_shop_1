@@ -72,38 +72,77 @@
         //     return $result;
         // }
 
-        public function search_product(){
-           
-            $keyword= isset($_GET['keyword']) ? $_GET['keyword'] : '';
-            $item_page=10;
-            if(!isset($_GET['page']) ){
-                $current_page=1;
-            }elseif($_GET['page']==0){
-                $current_page=1;
-            }else{
-                $current_page=$_GET['page'];
-            }
-            $start = ($current_page - 1)*$item_page;
-            $query="SELECT product.*, category.catname, brand.brandname 
-            FROM product INNER JOIN category  ON product.categoryId = category.categoryId
-            INNER JOIN brand  ON product.brandId = brand.brandId 
-            WHERE product.productname LIKE '%".$keyword."%' OR category.catname LIKE '%".$keyword."%'
-            OR brand.brandname LIKE '%".$keyword."%' 
-            order by product.productId DESC LIMIT $start,$item_page";
-            // $query="SELECT * FROM product order by id DESC ";
-            $result=$this->db->select($query);
-            return $result;
-        }
+        // public function search_product($keyword='',$category_id=0){
+        //     $item_page=10;
+        //     if(!isset($_GET['page']) ){
+        //         $current_page=1;
+        //     }elseif($_GET['page']==0){
+        //         $current_page=1;
+        //     }else{
+        //         $current_page=$_GET['page'];
+        //     }
+        //     $start = ($current_page - 1)*$item_page;
+        //     $query='';
+        //     $where='';
+        //     if(!empty($keyword)){
+        //         $where = "WHERE product.productname LIKE '%".$keyword."%'";
+        //     }
+        //     if(!empty($category_id)){
+        //         if(empty($where)){
+        //             $where ="WHERE category.categoryId =".$category_id."";
+        //         }else {
+        //             $where .= "AND category.categoryId =".$category_id."";
+        //         }
+        //     }
+        //     $query="SELECT product.*, category.catname, brand.brandname 
+        //     FROM product LEFT JOIN category  ON product.categoryId = category.categoryId
+        //     LEFT JOIN brand  ON product.brandId = brand.brandId 
+        //     ".$where."
+        //     order by product.productId DESC LIMIT $start,$item_page";
+        //     $result=$this->db->select($query);
+        //     return $result; 
+        // }
 
-        public function show_product_all(){
-            $keyword= isset($_GET['keyword']) ? $_GET['keyword'] : '';
-            $query="SELECT product.*, category.catname, brand.brandname 
-            FROM product INNER JOIN category  ON product.categoryId = category.categoryId
-            INNER JOIN brand  ON product.brandId = brand.brandId 
-            order by product.productId DESC";
-            // $query="SELECT * FROM product order by productId DESC ";
-            $result=$this->db->select($query);
-            return $result;
+        public function show_product_all($data=[]){
+            $where=[];
+            if(!empty($data['count']) && $data['count']==true){
+                $query="SELECT count(*) as total";
+            }else {
+                $query= "SELECT product.*, category.catname, brand.brandname"; 
+            }
+
+            $query .= " FROM product LEFT JOIN category  ON product.categoryId = category.categoryId
+            LEFT JOIN brand  ON product.brandId = brand.brandId";
+           
+            if(!empty($data['category_id'])){
+            $where[] ="category.categoryId=".$data['category_id']; 
+            }
+            if(!empty($data['keyword'])){
+            $where[] ="product.productname LIKE '%".$data['keyword']."%'"; 
+            }
+            if(!empty($where)){
+            $where_string =implode(" AND ",$where);
+            $query .= " WHERE ". $where_string ;
+            }  
+            $query.= " order by product.productId DESC ";
+            $list =  [];
+            if(!empty($data['count']) && $data['count']==true ){
+                $result=$this->db->select($query);
+                $row = $result -> fetch_array(MYSQLI_ASSOC);
+                return !empty($row) ? $row['total'] : 0;
+            } else {
+                $query.= "LIMIT 5 ";
+                $result=$this->db->select($query);
+                if($result){
+                    while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+                        $list [] = $row;     
+                    }
+                }else {
+                    echo "";
+                }
+                 
+            }
+            return $list; 
         }
 
         
