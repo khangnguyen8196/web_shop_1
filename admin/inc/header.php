@@ -20,27 +20,12 @@
     <link rel="stylesheet" type="text/css" href="css/grid.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="css/layout.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="css/nav.css" media="screen" />
-    <link href="css/table/demo_page.css" rel="stylesheet" type="text/css" />
-    <!-- BEGIN: load jquery -->
-    <script src="js/jquery-1.6.4.min.js" type="text/javascript"></script>
-    <script type="text/javascript" src="js/jquery-ui/jquery.ui.core.min.js"></script>
-    <script src="js/jquery-ui/jquery.ui.widget.min.js" type="text/javascript"></script>
-    <script src="js/jquery-ui/jquery.ui.accordion.min.js" type="text/javascript"></script>
-    <script src="js/jquery-ui/jquery.effects.core.min.js" type="text/javascript"></script>
-    <script src="js/jquery-ui/jquery.effects.slide.min.js" type="text/javascript"></script>
-    <script src="js/jquery-ui/jquery.ui.mouse.min.js" type="text/javascript"></script>
-    <script src="js/jquery-ui/jquery.ui.sortable.min.js" type="text/javascript"></script>
-    <script src="js/table/jquery.dataTables.min.js" type="text/javascript"></script>
-    <!-- END: load jquery -->
-    <script type="text/javascript" src="js/table/table.js"></script>
-    <script src="js/setup.js" type="text/javascript"></script>
-	 <script type="text/javascript">
-        $(document).ready(function () {
-            setupLeftMenu();
-		    setSidebarHeight();
-        });
-    </script>
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
 </head>
 <body>
     <div class="container_12">

@@ -103,7 +103,7 @@
         //     return $result; 
         // }
 
-        public function show_product_all($data=[]){
+        public function show_product_all($start,$item_page,$data=[]){
             $where=[];
             if(!empty($data['count']) && $data['count']==true){
                 $query="SELECT count(*) as total";
@@ -131,7 +131,7 @@
                 $row = $result -> fetch_array(MYSQLI_ASSOC);
                 return !empty($row) ? $row['total'] : 0;
             } else {
-                $query.= "LIMIT 5 ";
+                $query.= "LIMIT $start,$item_page ";
                 $result=$this->db->select($query);
                 if($result){
                     while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
@@ -142,7 +142,7 @@
                 }
                  
             }
-            return $list; 
+            return $list;
         }
 
         
@@ -213,10 +213,11 @@
             }
         }
 
-        public function delete_product($id){
-            $query="DELETE FROM product WHERE productId = $id";
+        public function delete_product($productId,$image){
+            $query="DELETE FROM product WHERE productId = $productId";
             $result=$this->db->delete($query);
             if($result){
+                unlink("uploads/".$image);
                 $alert="<span class='success'>Delete Success!</span> ";
                 return $alert;
             }else {

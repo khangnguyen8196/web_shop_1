@@ -7,5 +7,5 @@
                   Welcome admin panel        
                 </div>
             </div>
-        </div>
+        </div>  
 <?php include 'inc/footer.php';?>
