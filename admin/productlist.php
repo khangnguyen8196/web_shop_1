@@ -5,6 +5,37 @@
 <?php include_once '../classes/product.php';?>
 <?php include_once '../helpers/format.php';?>
 <?php include_once '../lib/database.php';?>
+<?php
+		$fm = new Format();
+		$product = new product();
+		if(isset($_POST['delete_image'])){
+			$productId=$_POST['delete_id'];
+			$image=$_POST['del_image'];
+			$delProduct=$product->delete_product($productId,$image);
+		}
+		$keyword='';
+		$category_id=0;
+		if(isset($_GET['category_id'])){
+			$category_id=(int)$_GET['category_id'];
+		}
+		if(isset($_GET['keyword'])){
+			$keyword=$_GET['keyword'];
+		}
+		// total
+		if(!isset($_GET['page']) ){
+			$current_page=1;
+		}elseif($_GET['page']==0){
+			$current_page=1;
+		}else{
+			$current_page=$_GET['page'];
+		}
+		$item_page=10;
+		$start = ($current_page - 1)*$item_page;
+		$count = $product->show_product_all($start,$item_page,['category_id'=>$category_id, 'keyword'=>$keyword, 'count'=>true]);
+		$total_page=ceil($count/$item_page);
+		// data
+		$product_all = $product->show_product_all($start,$item_page,['category_id'=>$category_id, 'keyword'=>$keyword ]);
+?>
 
 <style>
 	.search_product{

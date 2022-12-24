@@ -1160,3 +1160,17 @@ td.details {
 
 .gallery-sand .sorting{background-color:white !important;}
 table.form select{width:200px;}
+
+/* productList*/
+.search_product{
+
+	display: flex;
+	border: 1px solid #999;
+	border-radius: 4px;
+	padding: 10px;
+	margin-bottom: 20px;
+	justify-content:space-evenly;
+}
+.header_table {
+	background-color: #888;
+}

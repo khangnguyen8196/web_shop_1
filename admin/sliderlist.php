@@ -1,10 +1,23 @@
 <?php include 'inc/header.php';?>
 <?php include 'inc/sidebar.php';?>
 <?php include_once '../classes/product.php';?>
+<?php
+	$product = new product();
+		if(isset($_POST['delete_slider_image'])){
+			$sliderId=$_POST['delete_id'];
+			$slider_image=$_POST['del_slider_image'];
+			$del_slider=$product->del_slider($sliderId,$slider_image);
+		}
+?>
 <div class="grid_10">
     <div class="box round first grid">
         <h2>Slider List</h2>
-        <div class="block">  
+        <div class="block">
+			<?php
+				if(isset($del_slider)){
+					echo $del_slider;
+				}
+			?>  
             <table class="data display datatable" id="example">
 			<thead>
 				<tr>
@@ -30,7 +43,11 @@
 					<td><img src="uploads/<?php echo $result_slider['sliderimage'] ?>" height="120x" width="500px"/></td>
 					<td><?php echo $result_slider['type'] ?></td>				
 					<td>
-						<a href="?del_slider=<?php echo $result_slider['sliderId'] ?>" onclick="return confirm('Are you sure to Delete!');" >Delete</a> 
+						<form action="" method ="POST">
+							<input type="hidden" name="delete_id" value="<?php echo $result_slider['sliderId'] ?>">
+							<input type="hidden" name="del_slider_image" value="<?php echo $result_slider['sliderimage'] ?>">
+							<button type="submit" name="delete_slider_image">Delete</button>
+						</form>
 					</td>
 				</tr>
 				<?php 

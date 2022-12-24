@@ -40,11 +40,11 @@
 					while($result=$productbycat->fetch_assoc()){
 				?>
 			
-				<div class="grid_1_of_4 images_1_of_4">
+				<div class="grid_1_of_5 images_1_of_5">
 					 <a href="detail.php?proid=<?php echo $result['productId']; ?>"><img width="207px" height="207px" src="admin/uploads/<?php echo $result['image'] ?>" alt="image" /></a>
 					 <h2><?php echo $result['productname'] ?></h2>
 					 <p><?php echo $fm->textShorten($result['productname'], 50)?></p>
-					 <p><span class="price"><?php echo $result['price']." "."VNĐ" ?></span></p>
+					 <p><span class="price"><?php echo $fm->format_currency($result['price']." "."VNĐ") ?></span></p>
 				     <div class="button"><span><a href="detail.php?proid=<?php echo $result['productId']; ?>" class="details">Details</a></span></div>
 				</div>
 				<?php	

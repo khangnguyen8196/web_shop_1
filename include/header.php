@@ -23,6 +23,12 @@
   header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); 
   header("Cache-Control: max-age=2592000");
 ?>
+<?php
+	$tukhoa='';
+	if(isset($_GET['tukhoa'])){
+		$tukhoa= $_GET['tukhoa'];
+	}
+?>
 
 <!DOCTYPE HTML>
 <head>
@@ -40,6 +46,7 @@
 <script type="text/javascript" src="js/nav-hover.js"></script>
 <link href='http://fonts.googleapis.com/css?family=Monda' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Doppio+One' rel='stylesheet' type='text/css'>
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"> -->
 <script type="text/javascript">
   $(document).ready(function($){
     $('#dc_mega-menu-orange').dcMegaMenu({rowItems:'4',speed:'fast',effect:'fade'});
@@ -53,9 +60,10 @@
 				<a href="index.php"><img width="230px" height="100px" src="images/logoshop.png" alt="" /></a>
 			</div>
 			  	<div class="header_top_right">
-					<div class="search_box">
-						<form>
-							<input type="text" value="Search for Products" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search for Products';}"><input type="submit" value="SEARCH">
+					<div class="search_box" enctype="multipart/form-data">
+						<form action="index.php" method="GET" >
+							<input type="text" id="tukhoa" value="<?php echo $tukhoa?>" name="tukhoa" placeholder="Search for Products">
+							<input type="submit" id ="search" name="search" value="SEARCH">
 						</form>
 					</div>
 			    <div class="shopping_cart">
@@ -150,3 +158,4 @@
 	  <div class="clear"></div>
 	</ul>
 </div>
+

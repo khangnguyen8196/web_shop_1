@@ -36,7 +36,7 @@
 							<h2><?php echo $result['productname'];?></h2>
 							<p><?php echo $fm->textShorten($result['description'],100) ;?></p>					
 							<div class="price">
-								<p>Price: <span><?php echo $result['price']." "."VNĐ";?></span></p>
+								<p>Price: <span><?php echo $fm->format_currency($result['price']." "."VNĐ");?></span></p>
 								<p>Category: <span><?php echo $result['catname'];?></span></p>
 								<p>Brand:<span><?php echo $result['brandname'];?></span></p>
 							</div>

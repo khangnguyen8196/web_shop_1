@@ -4,7 +4,7 @@
 				<?php 
 					$getLastestHp =$product->getLastestHp();
 					if(isset($getLastestHp)){
-						while($result=$getLastestHp->fetch_assoc()){
+						foreach($getLastestHp as $key => $result){
 				?>
 					<div class="listview_1_of_2 images_1_of_2">
 						<div class="listimg listimg_2_of_1">
@@ -14,7 +14,7 @@
 						</div>
 						<div class="text list_2_of_1">
 							<h2>HP</h2>
-							<p><?php echo $fm->textShorten($result['description'],40)?></p>
+							<p><?php echo $fm->textShorten($result['description'],20)?></p>
 							<div class="button"><span><a href="detail.php?proid=<?php echo $result['productId']; ?>">Add to cart</a></span></div>
 					</div>
 				</div>
@@ -26,7 +26,7 @@
 				<?php 
 					$getLastestAsus =$product->getLastestAsus();
 					if(isset($getLastestAsus)){
-						while($result=$getLastestAsus->fetch_assoc()){
+						foreach($getLastestAsus as $key => $result){
 				?>
 				<div class="listview_1_of_2 images_1_of_2">
 					<div class="listimg listimg_2_of_1">
@@ -35,7 +35,7 @@
 					</div>
 					<div class="text list_2_of_1">
 						  <h2>Asus</h2>
-						  <p><?php echo $fm->textShorten($result['description'],40)?></p>
+						  <p><?php echo $fm->textShorten($result['description'],20)?></p>
 						  <div class="button"><span><a href="detail.php?proid=<?php echo $result['productId']; ?>">Add to cart</a></span></div>
 					</div>
 				</div>
@@ -49,7 +49,7 @@
 				<?php 
 					$getLastestIphone =$product->getLastestIphone();
 					if(isset($getLastestIphone)){
-						while($result=$getLastestIphone->fetch_assoc()){
+						foreach($getLastestIphone as $key => $result){
 				?>
 				<div class="listview_1_of_2 images_1_of_2">
 					<div class="listimg listimg_2_of_1">
@@ -59,7 +59,7 @@
 					</div>
 				    <div class="text list_2_of_1">
 						<h2>Iphone</h2>
-						<p><?php echo $fm->textShorten($result['description'],40)?></p>
+						<p><?php echo $fm->textShorten($result['description'],20)?></p>
 						<div class="button"><span><a href="detail.php?proid=<?php echo $result['productId']; ?>">Add to cart</a></span></div>
 				   </div>
 			   </div>
@@ -71,7 +71,7 @@
 			   <?php 
 					$getLastestSamsung =$product->getLastestSamsung();
 					if(isset($getLastestSamsung)){
-						while($result=$getLastestSamsung->fetch_assoc()){
+						foreach($getLastestSamsung as $key => $result){
 				?>
 				<div class="listview_1_of_2 images_1_of_2">
 					<div class="listimg listimg_2_of_1">
@@ -81,7 +81,7 @@
 					</div>
 					<div class="text list_2_of_1">
 						  <h2>Samsung</h2>
-						  <p><?php echo $fm->textShorten($result['description'],40)?></p>
+						  <p><?php echo $fm->textShorten($result['description'],20)?></p>
 						  <div class="button"><span><a href="detail.php?proid=<?php echo $result['productId']; ?>">Add to cart</a></span></div>
 					</div>
 				</div>
@@ -92,7 +92,7 @@
 			</div>
 		  <div class="clear"></div>
 		</div>
-			 <div class="header_bottom_right_images">
+	<div class="header_bottom_right_images">
 		   <!-- FlexSlider -->
              
 			<section class="slider">
@@ -105,7 +105,8 @@
 
 						<li><img width="180px" height="100px" src="admin/uploads/<?php echo $result_slider['sliderimage'] ?>" alt="<?php echo $result_slider['slidername'] ?>"/></li>
 						
-						<?php	}
+							<?php	
+								}
 							}
 						?>
 				    </ul>
@@ -115,3 +116,4 @@
 	    </div>
 	  	<div class="clear"></div>
 </div>
+

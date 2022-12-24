@@ -125,14 +125,9 @@
     </div>
 </div>
 <!-- Load TinyMCE -->
-<script src="../js/tiny-mce/jquery.tinymce.js" type="text/javascript"></script>
+<script src="../admin/resources/ckeditor/ckeditor.js"></script> 
 <script type="text/javascript">
-    $(document).ready(function () {
-        setupTinyMCE();
-        setDatePicker('date-picker');
-        $('input[type="checkbox"]').fancybutton();
-        $('input[type="radio"]').fancybutton();
-    });
+        CKEDITOR.replace('description');
 </script>
 <!-- Load TinyMCE -->
 <?php include 'inc/footer.php';?>

@@ -11,8 +11,8 @@
         $id=$_GET['productid'];
     }
 	if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])){
-       
-		$updateProduct=$product->update_product($_POST , $_FILES,$id);
+        $image_old=$_POST['image_old'];
+		$updateProduct=$product->update_product($_POST , $_FILES,$id,$image_old);
     }
 		
 ?>
@@ -114,6 +114,7 @@
                         <label>Upload Image</label>
                     </td>
                     <td>
+                        <input type="hidden" name="image_old" value="<?php echo $result_row['image'] ?>"/> 
                         <img width="120" height="100" src="uploads/<?php echo $result_row['image'] ?>">
                         <input type="file" name="image" />
                     </td>
@@ -154,14 +155,9 @@
     </div>
 </div>
 <!-- Load TinyMCE -->
-<script src="../js/tiny-mce/jquery.tinymce.js" type="text/javascript"></script>
+<script src="../admin/resources/ckeditor/ckeditor.js"></script> 
 <script type="text/javascript">
-    $(document).ready(function () {
-        setupTinyMCE();
-        setDatePicker('date-picker');
-        $('input[type="checkbox"]').fancybutton();
-        $('input[type="radio"]').fancybutton();
-    });
+        CKEDITOR.replace('description');
 </script>
 <!-- Load TinyMCE -->
 <?php include 'inc/footer.php';?>

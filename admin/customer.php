@@ -84,11 +84,6 @@
                                 <input type="text" readonly="readonly" name="city" value="<?php echo $result['city']?>" placeholder="Enter Category Name..." class="medium" />
                             </td>
                         </tr>
-						<tr> 
-                            <td>
-                                <input type="submit" name="submit" Value="Edit" />
-                            </td>
-                        </tr>
                     </table>
                     </form>
                <?php }

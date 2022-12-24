@@ -32,7 +32,7 @@
             $div=explode('.', $file_name);
             $file_ext = strtolower(end($div));
             $unique_image = substr(md5(time()),0, 10). '.' .$file_ext;
-            $uploaded_image= "../admin/uploads/".$unique_image;
+            $uploaded_image= "uploads/".$unique_image;
         
             if($name =="" || $brandId =="" || $categoryId =="" || $description =="" || $price =="" || $type =="" || $file_name ==""){
                 $alert ="<span class='error'>Fields must be not empty</span>";
@@ -52,57 +52,6 @@
 
             }
         }
-
-        // public function show_product(){
-        //     $item_page=10;
-        //     if(!isset($_GET['page']) ){
-        //         $current_page=1;
-        //     }elseif($_GET['page']==0){
-        //         $current_page=1;
-        //     }else{
-        //         $current_page=$_GET['page'];
-        //     }
-        //     $start = ($current_page - 1)*$item_page;
-        //     $query="SELECT product.*, category.catname, brand.brandname 
-        //     FROM product INNER JOIN category  ON product.categoryId = category.categoryId
-        //     INNER JOIN brand  ON product.brandId = brand.brandId
-        //     order by product.productId DESC LIMIT $start,$item_page";
-        //     // $query="SELECT * FROM product order by id DESC ";
-        //     $result=$this->db->select($query);
-        //     return $result;
-        // }
-
-        // public function search_product($keyword='',$category_id=0){
-        //     $item_page=10;
-        //     if(!isset($_GET['page']) ){
-        //         $current_page=1;
-        //     }elseif($_GET['page']==0){
-        //         $current_page=1;
-        //     }else{
-        //         $current_page=$_GET['page'];
-        //     }
-        //     $start = ($current_page - 1)*$item_page;
-        //     $query='';
-        //     $where='';
-        //     if(!empty($keyword)){
-        //         $where = "WHERE product.productname LIKE '%".$keyword."%'";
-        //     }
-        //     if(!empty($category_id)){
-        //         if(empty($where)){
-        //             $where ="WHERE category.categoryId =".$category_id."";
-        //         }else {
-        //             $where .= "AND category.categoryId =".$category_id."";
-        //         }
-        //     }
-        //     $query="SELECT product.*, category.catname, brand.brandname 
-        //     FROM product LEFT JOIN category  ON product.categoryId = category.categoryId
-        //     LEFT JOIN brand  ON product.brandId = brand.brandId 
-        //     ".$where."
-        //     order by product.productId DESC LIMIT $start,$item_page";
-        //     $result=$this->db->select($query);
-        //     return $result; 
-        // }
-
         public function show_product_all($start,$item_page,$data=[]){
             $where=[];
             if(!empty($data['count']) && $data['count']==true){
@@ -130,6 +79,7 @@
                 $result=$this->db->select($query);
                 $row = $result -> fetch_array(MYSQLI_ASSOC);
                 return !empty($row) ? $row['total'] : 0;
+                
             } else {
                 $query.= "LIMIT $start,$item_page ";
                 $result=$this->db->select($query);
@@ -143,17 +93,57 @@
                  
             }
             return $list;
+         
         }
 
+        public function search_product($start,$item_page,$data=[]){
+            $where='';
+            if(!empty($data['count']) && $data['count']==true){
+                $query="SELECT count(*) as total";
+            }else {
+                $query= "SELECT product.*, category.catname, brand.brandname"; 
+            }
+
+            $query .= " FROM product INNER JOIN category  ON product.categoryId = category.categoryId
+            INNER JOIN brand  ON product.brandId = brand.brandId";
+            if(!empty($data['tukhoa'])){
+            $where.=" product.productname LIKE '%".$data['tukhoa']."%'"; 
+            }
+            if(!empty($where)){
+                $query .= " WHERE ". $where ;
+            }  
+            $query.= " order by product.productId DESC ";
+            $list =  [];
+            if(!empty($data['count']) && $data['count']==true ){
+                $result=$this->db->select($query);
+                $row = $result -> fetch_array(MYSQLI_ASSOC);
+                return !empty($row) ? $row['total'] : 0;
+                
+            } else {
+                $query.= "LIMIT $start,$item_page";
+                $result=$this->db->select($query);
+                if($result){
+                    while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+                        $list [] = $row;     
+                    }
+                }else {
+                    echo "";
+                }
+                 
+            }
+            return $list;
+        }
         
 
-        public function update_product($data,$files,$id){
+        public function update_product($data,$files,$id,$image_old){
             $name= mysqli_real_escape_string($this->db->link,$data['productname']);
             $brandId= mysqli_real_escape_string($this->db->link,$data['brandId']);
             $categoryId= mysqli_real_escape_string($this->db->link,$data['categoryId']);
             $description= mysqli_real_escape_string($this->db->link,$data['description']);
             $price= mysqli_real_escape_string($this->db->link,$data['price']);
             $type= mysqli_real_escape_string($this->db->link,$data['type']);
+            $image_old=mysqli_real_escape_string($this->db->link,$image_old);
+           
             // kiểm tra và lấy hình ảnh vào uploads
             $permited =array('jpg','jpeg','png','gif');
             $file_name=$_FILES['image']['name'];
@@ -164,7 +154,11 @@
             $file_ext = strtolower(end($div));
             $unique_image = substr(md5(time()),0, 10). '.' .$file_ext;
             $uploaded_image= "../admin/uploads/".$unique_image;
-        
+            if($file_name!=''){
+                $file_name=$uploaded_image;
+            }else {
+                $image_old =$uploaded_image;
+            }
             if($name =="" || $brandId =="" || $categoryId =="" || $description =="" || $price =="" || $type ==""){
                 $alert ="<span class='success'>product must be not empty</span>";
                 return $alert;
@@ -180,7 +174,7 @@
                         return $alert;
                     }
                     move_uploaded_file($file_temp, $uploaded_image);
-                    unlink($unique_image); 
+                    unlink("uploads/".$image_old); 
                     $query="UPDATE product SET 
                     productname ='$name',
                     brandId ='$brandId',
@@ -221,7 +215,7 @@
                 $alert="<span class='success'>Delete Success!</span> ";
                 return $alert;
             }else {
-                $alert="<span class='error'>Delete not Success!</span> ";
+                $alert="<span class='success'>Delete not Success!</span> ";
                 return $alert;
             }
         }
@@ -234,23 +228,36 @@
 
         // End backend
 
-        public function getproduct_feathered(){
-            $query="SELECT * FROM product WHERE type = 1 order by productId DESC LIMIT 5 ";
-            $result=$this->db->select($query);
-            return $result;
-        }
+        // public function getproduct_feathered($tukhoa){
+        //     $query="SELECT product.*, category.catname, brand.brandname
+        //     FROM product INNER JOIN category  ON product.categoryId = category.categoryId
+        //     INNER JOIN brand  ON product.brandId = brand.brandId
+        //     WHERE  product.productname  OR category.catname  OR brand.brandname LIKE '%$tukhoa%'
+        //     order by product.productId DESC LIMIT 5";
+        //     $list =  [];
+        //     $result=$this->db->select($query);
+        //         if($result){
+        //             while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+        //              $list [] = $row;     
+        //          }
+        //         }else {
+        //             echo "";
+        //         }
+        //     return $list;
+        // }
 
         public function getproduct_new(){
-            $item_page=5;
-            if(!isset($_GET['page'])){
-                $current_page=1;
-            }else{
-                $current_page=$_GET['page'];
-            }
-            $start = ($current_page - 1)*$item_page;
-            $query="SELECT * FROM product order by productId DESC LIMIT $start, $item_page";
+            $query="SELECT * FROM product order by productId DESC LIMIT 4";
+            $list =  [];
             $result=$this->db->select($query);
-            return $result;
+            if($result){
+                while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+                    $list [] = $row;     
+                }
+            }else {
+                echo "";
+            }
+            return $list;
         }
         public function getproduct_all(){
             $query="SELECT * FROM product order by productId DESC ";
@@ -269,29 +276,116 @@
 
         public function getLastestAsus(){
             $query="SELECT * FROM product WHERE brandId = '6' order by productId DESC LIMIT 1";
+            $list =  [];
             $result=$this->db->select($query);
-            return $result;
+            if($result){
+                while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+                    $list [] = $row;     
+                }
+            }else {
+                echo "";
+            }
+            return $list;
         }
 
         
         public function getLastestSamsung(){
             $query="SELECT * FROM product WHERE brandId = '1' order by productId DESC LIMIT 1";
+            $list =  [];
             $result=$this->db->select($query);
-            return $result;
+            if($result){
+                while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+                    $list [] = $row;     
+                }
+            }else {
+                echo "";
+            }
+            return $list;
         }
 
         
         public function getLastestIphone(){
             $query="SELECT * FROM product WHERE brandId = '2' order by productId DESC LIMIT 1";
+            $list =  [];
             $result=$this->db->select($query);
-            return $result;
+            if($result){
+                while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+                    $list [] = $row;     
+                }
+            }else {
+                echo "";
+            }
+            return $list;
         }
 
         
         public function getLastestHp(){
             $query="SELECT * FROM product WHERE brandId = '5' order by productId DESC LIMIT 1";
+            $list =  [];
             $result=$this->db->select($query);
-            return $result;
+            if($result){
+                while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+                    $list [] = $row;     
+                }
+            }else {
+                echo "";
+            }
+            return $list;
+        }
+        
+
+        // product with category
+        public function get_cat_1(){
+            $query="SELECT * FROM product WHERE categoryId = '1' order by productId DESC LIMIT 5";
+            $list =  [];
+            $result=$this->db->select($query);
+            if($result){
+                while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+                    $list [] = $row;     
+                }
+            }else {
+                echo "";
+            }
+            return $list;
+        }
+        public function get_cat_2(){
+            $query="SELECT * FROM product WHERE categoryId = '2' order by productId DESC LIMIT 5";
+            $list =  [];
+            $result=$this->db->select($query);
+            if($result){
+                while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+                    $list [] = $row;     
+                }
+            }else {
+                echo "";
+            }
+            return $list;
+        }
+        public function get_cat_3(){
+            $query="SELECT * FROM product WHERE categoryId = '3' order by productId DESC LIMIT 5";
+            $list =  [];
+            $result=$this->db->select($query);
+            if($result){
+                while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+                    $list [] = $row;     
+                }
+            }else {
+                echo "";
+            }
+            return $list;
+        }
+        public function get_cat_4(){
+            $query="SELECT * FROM product WHERE categoryId = '4' order by productId DESC LIMIT 5";
+            $list =  [];
+            $result=$this->db->select($query);
+            if($result){
+                while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+                    $list [] = $row;     
+                }
+            }else {
+                echo "";
+            }
+            return $list;
         }
 
         // product wishlist
@@ -373,13 +467,23 @@
         }
 
         public function show_slider(){
-            // $query="SELECT product.*, category.catname, brand.brandname 
-            // FROM product INNER JOIN category  ON product.categoryId = category.categoryId
-            // INNER JOIN brand  ON product.brandId = brand.brandId
-            // order by product.productId DESC ";
             $query="SELECT * FROM slider WHERE type ='1' order by sliderId DESC ";
             $result=$this->db->select($query);
             return $result;
+        }
+
+        public function del_slider($sliderId,$slider_image){
+            $query="DELETE FROM slider WHERE sliderId = $sliderId";
+            $result=$this->db->delete($query);
+            if($result){
+                unlink("uploads/".$slider_image);
+                $alert="<span class='success'>Delete Success!</span> ";
+                return $alert;
+            }else {
+                $alert="<span class='success'>Delete not Success!</span> ";
+                return $alert;
+            }
+            
         }
         
     }   

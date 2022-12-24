@@ -49,7 +49,9 @@
 		background-color: #888;
 	}
 </style>
-
+<div class="grid_12">
+	<div class="box round first grid">
+		<div class="block"> 
             <table class="data display " id="pagination_data">
 				
 				<div class="search_product">			
@@ -133,7 +135,9 @@
 				</tbody>
 			</table>
 	
-	<div>
+		</div>
+	</div>
+
 		<?php
 			$output = '</table><br /><div align="center">';
 			if ($current_page > 1 && $total_page > 1){
@@ -142,7 +146,9 @@
 			for($i=1; $i<=$total_page; $i++)  
 			{  
 				if($i !=$current_page){
-					$output .= "<span class='pagination_link' style='cursor:pointer; padding:6px; border:1px solid #ccc;' id='".$i."'>".$i."</span>";  
+					if($i > $current_page - 4 && $i < $current_page +4 ){
+						$output .= "<span class='pagination_link' style='cursor:pointer; padding:6px; border:1px solid #ccc;' id='".$i."'>".$i."</span>";  
+					}
 				}else{
 					$output .= "<span class='pagination_link' style='cursor:pointer; padding:6px; border:1px solid #ccc;' id='".$i."'><strong>".$i."</strong></span>";  
 
@@ -155,5 +161,5 @@
 			echo $output;  
 		?>  
 		<span>Có tất cả <strong><?php echo $count ?></strong> sản phẩm trên <strong><?php echo $total_page ?></strong> trang</span>
-	</div>
+</div>	
 
