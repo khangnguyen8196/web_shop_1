@@ -14,6 +14,7 @@
 	$cart= new cart();
 	$cus= new customer();
 	$cat = new category();
+	$brand = new brand();
 	$product= new product();
 ?>
  
@@ -35,23 +36,15 @@
 <title>Store Website</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
 <link href="css/style.css" rel="stylesheet" type="text/css" media="all"/>
-<link href="css/menu.css" rel="stylesheet" type="text/css" media="all"/>
-<script src="js/jquerymain.js"></script>
-<script src="js/script.js" type="text/javascript"></script>
-<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script> 
-<script type="text/javascript" src="js/nav.js"></script>
-<script type="text/javascript" src="js/move-top.js"></script>
-<script type="text/javascript" src="js/easing.js"></script> 
-<script type="text/javascript" src="js/nav-hover.js"></script>
+<link href="css/menu_1.css" rel="stylesheet" type="text/css" media="all"/>
+<link href="css/slider.css" rel="stylesheet" type="text/css" media="all"/>
 <link href='http://fonts.googleapis.com/css?family=Monda' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Doppio+One' rel='stylesheet' type='text/css'>
 <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"> -->
-<script type="text/javascript">
-  $(document).ready(function($){
-    $('#dc_mega-menu-orange').dcMegaMenu({rowItems:'4',speed:'fast',effect:'fade'});
-  });
-</script>
+
+<script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
 </head>
 <body>
 <div class="wrap">
@@ -61,7 +54,7 @@
 			</div>
 			  	<div class="header_top_right">
 					<div class="search_box" enctype="multipart/form-data">
-						<form action="index.php" method="GET" >
+						<form action="" method="GET" >
 							<input type="text" id="tukhoa" value="<?php echo $tukhoa?>" name="tukhoa" placeholder="Search for Products">
 							<input type="submit" id ="search" name="search" value="SEARCH">
 						</form>
@@ -117,19 +110,56 @@
 	<div class="clear"></div>
 </div>
 <div class="menu">
-	<ul id="dc_mega-menu-orange" class="dc_mm-orange">
-	  <li><a href="index.php">Home</a></li>
-	  <li><a href="products.php">Products</a> </li>
-	  <li><a href="topbrands.php">Top Brands</a></li>
-	  <?php 
-	 	 $check_cart = $cart->check_cart();
-		 if($check_cart==false){
-			echo '';
-		 }else {
-			echo '<li><a href="cart.php">Cart</a></li>';
-		 }
-	  ?>
-	  <?php 
+	<ul id="" class="parent_menu">
+	  	<li><a href="index.php">Home</a></li>
+	  	<li>
+			<a href="products.php">Category</a> 
+			<ul class="submenu">
+				<div class="menu_list">
+				<?php
+					$getAllCategory=$cat->show_category_frontend();
+						if($getAllCategory){
+							foreach($getAllCategory as $key=>$result_cat){
+				?> 
+							<ul>
+								<li><a href="productbycat.php?categoryId=<?php echo $result_cat['categoryId'] ?>"><?php echo $result_cat['catname'] ?></a></li>
+							</ul>
+						<?php
+							}
+						}
+							?>
+				</div>
+			</ul>
+		</li>
+	  	<li>
+			<a href="topbrands.php">Top Brands</a>
+			<ul class="submenu">
+				<div class="menu_list">
+				<?php
+					$get_all_brand=$brand->show_brand();
+						if($get_all_brand){
+							foreach($get_all_brand as $key=>$result){
+				?> 
+							<ul>
+								<li><a href="productbybrand.php?brandId=<?php echo $result['brandId'] ?>"><?php echo $result['brandname'] ?></a></li>
+							</ul>
+						<?php
+							}
+						}
+							?>
+				</div>
+			</ul>
+		</li>
+						
+		<?php 
+			$check_cart = $cart->check_cart();
+			if($check_cart==false){
+				echo '';
+			}else {
+				echo '<li><a href="cart.php">Cart</a></li>';
+			}
+		?>
+	  	<?php 
 	  	$customerId=Session::get('customer_id');
 	 	$check_order = $cart->check_order($customerId);
 		if($check_order==false){
@@ -137,24 +167,24 @@
 		}else {
 			echo '<li><a href="orderdetail.php">Ordered</a></li>';
 		}
-	  ?>
-	  <li><a href="contact.php">Contact</a> </li>
-	  <?php 
+	  	?>
+	  	<li><a href="contact.php">Contact</a> </li>
+	  	<?php 
 	 	 $login_check = Session::get('customer_login');
 		 if($login_check==false){
 			echo '<li><a href="register.php">Register</a> </li>';
 		 }else {
 			echo '<li><a href="profile.php">Profile</a> </li>';
 		 }
-	  ?>
-	  <?php 
+	  	?>
+	  	<?php 
 	 	 $login_check = Session::get('customer_login');
 		 if($login_check==false){
 			echo '';
 		 }else {
 			echo '<li><a href="wishlist.php">WishList</a> </li>';
 		 }
-	  ?>
+	  	?>
 	  <div class="clear"></div>
 	</ul>
 </div>

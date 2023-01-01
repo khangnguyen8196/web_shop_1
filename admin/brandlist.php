@@ -30,11 +30,10 @@
 						<?php
 							$show_brand =$brand->show_brand();
 							if($show_brand){
-								$i=0;
-								while($result=$show_brand->fetch_assoc()){
-									$i++;?>
+								foreach($show_brand as $key => $result){
+									?>
 									<tr class="odd gradeX">
-										<td><?php echo $i ?></td>
+										<td><?php echo $key + 1 ?></td>
 										<td><?php echo $result['brandname']?></td>
 										<td><a href="brandedit.php?brandid=<?php echo $result['brandId']?>">Edit</a> || 
 										

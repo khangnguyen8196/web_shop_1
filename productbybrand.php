@@ -1,11 +1,10 @@
 <?php 
-	 if(!isset($_GET['categoryId']) || $_GET['categoryId']==NULL){
+	 if(!isset($_GET['brandId']) || $_GET['brandId']==NULL){
 		echo "<script>window.location='404.php'</script>";
 	 }else {
-		 $id=$_GET['categoryId'];
+		 $id=$_GET['brandId'];
 	 }
 ?>
-
 
 
 <?php include("include/header.php");?>
@@ -13,12 +12,12 @@
     <div class="content">
     	<div class="content_top">
 		<?php 
-				$name_cat =$cat->get_name_by_cat($id);
-				if($name_cat){
-					while($result_name=$name_cat->fetch_assoc()){
+				$name_brand =$brand->getbrandbyId($id);
+				if($name_brand){
+					foreach($name_brand as $key=>$result_name){
 		?>
     		<div class="heading">
-    		<h3><?php echo $result_name['catname'] ?></h3>
+    		<h3><?php echo $result_name['brandname'] ?></h3>
     		</div>
 		<?php	
 			}
@@ -30,12 +29,12 @@
     	</div>
 	      <div class="section group">
 			<?php 
-				$productbycat =$cat->get_product_by_cat($id);
-				if($productbycat){
-					foreach($productbycat as $key=>$result){
+				$productbybrand =$brand->get_brand_by_id($id);
+				if($productbybrand){
+					foreach($productbybrand as $key=>$result){
 				?>
 				<div class="grid_1_of_5 images_1_of_5">
-					 <a href="detail.php?proid=<?php echo $result['productId']; ?>"><img width="207px" height="207px" src="admin/uploads/<?php echo $result['image'] ?>" alt="image" /></a>
+					 <a href="detail.php?proid=<?php echo $result['productId']; ?>"><img width="140px" height="140px" src="admin/uploads/<?php echo $result['image'] ?>" alt="image" /></a>
 					 <h2><?php echo $result['productname'] ?></h2>
 					 <p><?php echo $fm->textShorten($result['productname'], 50)?></p>
 					 <p><span class="price"><?php echo $fm->format_currency($result['price']." "."VNĐ") ?></span></p>

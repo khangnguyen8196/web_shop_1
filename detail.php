@@ -17,7 +17,11 @@
 	if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['wishlist'])){
 		$productid=$_POST['productid'];
 		 $insertWishlist=$product->insertWishlist($productid,$customerId);
-	 }
+	}
+	
+	if(isset($_POST['comment_submit'])){
+		$comments=$cus->insert_comment();
+	}
 ?>
 <div class="main">
     <div class="content">
@@ -87,7 +91,7 @@
 					<?php
 					$getAllCategory=$cat->show_category_frontend();
 					if($getAllCategory){
-						while($result_cat=$getAllCategory->fetch_assoc()){
+						foreach($getAllCategory as $key=>$result_cat){
 					?> 
 					<ul>
 				      <li><a href="productbycat.php?categoryId=<?php echo $result_cat['categoryId'] ?>"><?php echo $result_cat['catname'] ?></a></li>
@@ -96,6 +100,24 @@
 					}}
 					?>
  				</div>
+		</div>
+		<div class="comment">
+			<div class="row">	
+				<div class="col-md-8">
+					<h5>Ý kiến người dùng</h5>
+					<?php 
+						if(isset($comments)){
+							echo $comments;
+						}
+					?>
+					<form action="" method="POST">
+						<p><input type="hidden" value="<?php echo $id ?>" name="productId_comment"/></p>
+						<p?><input type="text" placeholder="Chat Name" class="form-control" name="commentator"></p>
+						<p><textarea rows="5" style="resize:none" placeholder="Comment..." class="form-control" name="comment"></textarea></p>
+						<p><input type="submit" name="comment_submit" class="btn btn-primary" value="SEND COMMENT"/></p>
+					</form>
+				</div>
+			</div>		
 		</div>
  	</div>
 </div>

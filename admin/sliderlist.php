@@ -34,7 +34,7 @@
 					$get_slider = $product -> show_slider();
 							if($get_slider){
 								$i=0;
-								while($result_slider=$get_slider->fetch_assoc()){
+								foreach($get_slider as $key =>$result_slider){
 								$i++
 								?>
 				<tr class="odd gradeX">

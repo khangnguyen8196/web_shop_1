@@ -38,14 +38,44 @@
 
         public function show_brand(){
             $query="SELECT * FROM brand order by brandId DESC ";
+            $list =  [];
             $result=$this->db->select($query);
-            return $result;
+                if($result){
+                    while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+                     $list [] = $row;     
+                 }
+                }else {
+                    echo "";
+                }
+            return $list;
         }
 
         public function getbrandbyId($id){
             $query="SELECT * FROM brand WHERE brandId = $id ";
+            $list =  [];
             $result=$this->db->select($query);
-            return $result;
+                if($result){
+                    while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+                     $list [] = $row;     
+                 }
+                }else {
+                    echo "";
+                }
+            return $list;;
+        }
+
+        public function get_brand_by_id($id){
+            $query="SELECT * FROM product WHERE brandId = $id ";
+            $list =  [];
+            $result=$this->db->select($query);
+                if($result){
+                    while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+                     $list [] = $row;     
+                 }
+                }else {
+                    echo "";
+                }
+            return $list;;
         }
 
         public function update_brand($id,$name){

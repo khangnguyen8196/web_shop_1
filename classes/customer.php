@@ -15,6 +15,27 @@
             $this->fm = new Format();
         }
 
+        public function insert_comment(){
+            $productId=$_POST['productId_comment'];
+            $commentator=$_POST['commentator'];
+            $comment=$_POST['comment'];
+            if($commentator==''|| $comment==''){
+                $alert ="<span class='error'> Fields must be not empty</span>";
+                    return $alert;
+            }else {
+                $query="INSERT INTO comment (commentator,comment,productId) 
+                VALUES ('$commentator','$comment','$productId')";
+                $result=$this->db->insert($query);
+                if ($result){
+                    $alert= "<span class='success'> Comment successfully!</span>";
+                    return $alert;
+                }else {
+                    $alert= "<span class='error'> Comment not successfully!</span>";
+                    return $alert;
+                }
+            }
+        }
+
         public function insert_customer($data){
             $username= mysqli_real_escape_string($this->db->link,$data['username']); 
             $email= mysqli_real_escape_string($this->db->link,$data['email']); 

@@ -107,7 +107,7 @@
             $query .= " FROM product INNER JOIN category  ON product.categoryId = category.categoryId
             INNER JOIN brand  ON product.brandId = brand.brandId";
             if(!empty($data['tukhoa'])){
-            $where.=" product.productname LIKE '%".$data['tukhoa']."%'"; 
+            $where.=" product.productname OR category.catname OR brand.brandname LIKE '%".$data['tukhoa']."%'"; 
             }
             if(!empty($where)){
                 $query .= " WHERE ". $where ;
@@ -228,26 +228,40 @@
 
         // End backend
 
-        // public function getproduct_feathered($tukhoa){
-        //     $query="SELECT product.*, category.catname, brand.brandname
-        //     FROM product INNER JOIN category  ON product.categoryId = category.categoryId
-        //     INNER JOIN brand  ON product.brandId = brand.brandId
-        //     WHERE  product.productname  OR category.catname  OR brand.brandname LIKE '%$tukhoa%'
-        //     order by product.productId DESC LIMIT 5";
-        //     $list =  [];
-        //     $result=$this->db->select($query);
-        //         if($result){
-        //             while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
-        //              $list [] = $row;     
-        //          }
-        //         }else {
-        //             echo "";
-        //         }
-        //     return $list;
-        // }
+        public function getproduct_feathered(){
+            $query="SELECT product.*, category.catname, brand.brandname
+            FROM product INNER JOIN category  ON product.categoryId = category.categoryId
+            INNER JOIN brand  ON product.brandId = brand.brandId
+            order by product.productId DESC ";
+            $list =  [];
+            $result=$this->db->select($query);
+                if($result){
+                    while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+                     $list [] = $row;     
+                 }
+                }else {
+                    echo "";
+                }
+            return $list;
+          
+        }
+
+        public function getAllproduct(){
+            $query="SELECT * FROM product";
+            $list =  [];
+            $result=$this->db->select($query);
+                if($result){
+                    while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+                     $list [] = $row;     
+                 }
+                }else {
+                    echo "";
+                }
+           return $list;
+        }
 
         public function getproduct_new(){
-            $query="SELECT * FROM product order by productId DESC LIMIT 4";
+            $query="SELECT * FROM product order by productId DESC LIMIT 5";
             $list =  [];
             $result=$this->db->select($query);
             if($result){
@@ -468,8 +482,16 @@
 
         public function show_slider(){
             $query="SELECT * FROM slider WHERE type ='1' order by sliderId DESC ";
+            $list =  [];
             $result=$this->db->select($query);
-            return $result;
+            if($result){
+                while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+                    $list [] = $row;     
+                }
+            }else {
+                echo "";
+            }
+            return $list;
         }
 
         public function del_slider($sliderId,$slider_image){

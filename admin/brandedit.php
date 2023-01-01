@@ -25,7 +25,7 @@
                 <?php 
                     $get_brand_name = $brand->getbrandbyId($id);
                     if($get_brand_name){
-                        while($result = $get_brand_name->fetch_assoc()){   
+                        foreach($get_brand_name as $key => $result) {   
                 ?>
                  <form action="" method="post">
                     <table class="form">					

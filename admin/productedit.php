@@ -77,7 +77,7 @@
                                 $brand = new brand;
                                 $brandlist = $brand->show_brand();
                                 if($brandlist){
-                                    while($result= $brandlist->fetch_assoc()){
+                                    foreach($brandlist as $key =>$result){
                                   ?>     
                                     <option 
                                     <?php

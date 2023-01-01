@@ -26,6 +26,12 @@
                         <li><a href="sliderlist.php">Danh sách slide</a> </li>
                     </ul>
                 </li>
+                <li><a class="menuitem">datatable</a>
+                    <ul class="submenu">
+                        <li><a href="datatable.php">danhsach</a> </li>
+                    </ul>
+                </li>
+               
             </ul>
         </div>
     </div>

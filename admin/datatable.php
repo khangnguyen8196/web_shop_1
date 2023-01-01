@@ -5,6 +5,15 @@
 <?php include_once '../classes/product.php';?>
 <?php include_once '../helpers/format.php';?>
 <?php include_once '../lib/database.php';?>
+	
+	<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"> -->
+    
+	<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
+	<script src ="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
 <?php
 		$fm = new Format();
 		$product = new product();
@@ -13,30 +22,9 @@
 			$image=$_POST['del_image'];
 			$delProduct=$product->delete_product($productId,$image);
 		}
-		$keyword='';
-		$category_id=0;
-		if(isset($_GET['category_id'])){
-			$category_id=(int)$_GET['category_id'];
-		}
-		if(isset($_GET['keyword'])){
-			$keyword=$_GET['keyword'];
-		}
-		// total
-		if(!isset($_GET['page']) ){
-			$current_page=1;
-		}elseif($_GET['page']==0){
-			$current_page=1;
-		}else{
-			$current_page=$_GET['page'];
-		}
-		$item_page=5;
-		$start = ($current_page - 1)*$item_page;
-		$count = $product->show_product_all($start,$item_page,['category_id'=>$category_id, 'keyword'=>$keyword, 'count'=>true]);
-		$total_page=ceil($count/$item_page);
-		// data
-		$product_all = $product->show_product_all($start,$item_page,['category_id'=>$category_id, 'keyword'=>$keyword ]);
+		$product_all=$product->getproduct_feathered();
+		
 ?>
-
 <style>
 	.search_product{
 
@@ -51,12 +39,10 @@
 		background-color: #888;
 	}
 </style>
-
 <div class="grid_10">
-    <div class="box round first grid">
-        <h2>Product list</h2>
-        <div class="block"> 
-            <table class="data display " id="pagination_data">
+	<div class="box round first grid">
+		<div class="block"> 
+            <table class="table table-fluid " id="pagination">
 				<thead class="header_table">
 					<tr>
 						<th>STT</th>
@@ -105,41 +91,18 @@
 					?>
 				</tbody>
 			</table>
+	
 		</div>
-    </div>
+	</div>	
 </div>
 <script>
-        $(document).ready(function(){  
-        load_data();  
-			function load_data(page, keyword='',category_id) 
-			{  
-				var keyword =$('#keyword').val(); 
-				var category_id = $('#category_id').val();
-				$.ajax({  
-						url:"pagination.php",  
-						method:"GET",  
-						data:{page:page,keyword:keyword,category_id:category_id},  
-						success:function(data){  
-							$('#pagination_data').html(data);  
-						}  
-				})  
-			}
-			if("category_id"&&"keyword"&& "page"){
-				$(document).on('click', ('.pagination_link'), function(){  
-					var page = $(this).attr("id"); 
-					load_data(page);  
-				});
-				$('#keyword').keyup(function(){
-					var keyword = $('#keyword').val();
-					load_data(keyword);
-				});
-				$(document).on('click', ('.search'), function(){
-					var page = $(this).attr("id");   
-					var keyword = $('#keyword').val();
-					var category_id = $('#category_id').val();
-					load_data(page,keyword,category_id);  
-				});
-			} 
-        });  
-    </script> 
-<?php include 'inc/footer.php';?>
+	$(document).ready( function () {
+		
+			$('#pagination').DataTable({
+
+			});
+		
+   	 	
+	} );
+</script>
+

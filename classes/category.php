@@ -53,6 +53,18 @@
             return $array;
         }
 
+        public function list_category(){
+            $query="SELECT * FROM category order by categoryId DESC ";
+            $result=$this->db->select($query);
+            $array=[];
+            if($result){
+                while($row=mysqli_fetch_array($result)){
+                    $array[] = ['id' => $row['categoryId'], 'name' => $row['catname']];
+                }
+            }
+            return $array;
+        }
+
         public function getcatbyId($id){
             $query="SELECT * FROM category WHERE categoryId = $id ";
             $result=$this->db->select($query);
@@ -96,15 +108,31 @@
 
         public function show_category_frontend(){
             $query="SELECT * FROM category order by categoryId DESC ";
+            $list =  [];
             $result=$this->db->select($query);
-            return $result;
+                if($result){
+                    while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+                     $list [] = $row;     
+                 }
+                }else {
+                    echo "";
+                }
+            return $list;
         }
 
         public function get_product_by_cat($id){
             $query="SELECT * FROM product WHERE categoryId='$id' 
-            order by categoryId DESC LIMIT 5 ";
-            $result=$this->db->select($query);
-            return $result;
+            order by categoryId DESC LIMIT 4 ";
+             $list =  [];
+             $result=$this->db->select($query);
+                 if($result){
+                     while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+                      $list [] = $row;     
+                  }
+                 }else {
+                     echo "";
+                 }
+             return $list;
         }
 
         public function get_name_by_cat($id){

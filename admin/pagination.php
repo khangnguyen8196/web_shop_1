@@ -28,7 +28,7 @@
 		}else{
 			$current_page=$_GET['page'];
 		}
-		$item_page=10;
+		$item_page=5;
 		$start = ($current_page - 1)*$item_page;
 		$count = $product->show_product_all($start,$item_page,['category_id'=>$category_id, 'keyword'=>$keyword, 'count'=>true]);
 		$total_page=ceil($count/$item_page);
